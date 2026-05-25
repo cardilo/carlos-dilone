@@ -251,7 +251,8 @@
     .rec-desc  { font-size:0.76rem; font-weight:300; color:var(--muted); line-height:1.65; }
 
     /* ── CTA ──────────────────────────────────────── */
-    #cta { padding:6rem 0; background:var(--ink); text-align:center; position:relative; overflow:hidden; }
+    #cta { padding:6rem 0; background:#111111; text-align:center; position:relative; overflow:hidden; }
+    [data-theme="dark"] #cta { background:#111111; }
     #cta::before { content:''; position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px); background-size:60px 60px; }
     .cta-inner { position:relative; z-index:2; max-width:560px; margin:0 auto; padding:0 5vw; }
     .cta-label { font-size:0.67rem; font-weight:600; letter-spacing:0.13em; text-transform:uppercase; color:rgba(255,255,255,0.3); margin-bottom:0.9rem; }
