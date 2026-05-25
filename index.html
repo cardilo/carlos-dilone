@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
   <style>
+    /* ── LIGHT THEME (default) ───────────────────── */
     :root {
       --ink:    #111111;
       --mid:    #505050;
@@ -17,8 +18,27 @@
       --warm:   #F3EFE7;
       --white:  #FFFFFF;
       --amber:  #B8813A;
+      --card:   #FFFFFF;
       --ease:   cubic-bezier(0.22, 1, 0.36, 1);
+      --video-overlay: linear-gradient(to right,rgba(255,255,255,0.92) 0%,rgba(255,255,255,0.72) 40%,rgba(255,255,255,0.20) 70%,rgba(255,255,255,0.05) 100%);
+      --nav-scrolled: rgba(255,255,255,0.94);
     }
+
+    /* ── DARK THEME ──────────────────────────────── */
+    [data-theme="dark"] {
+      --ink:    #EDEDED;
+      --mid:    #AAAAAA;
+      --muted:  #606060;
+      --line:   #2C2C2C;
+      --bg:     #1A1A1A;
+      --warm:   #1C1915;
+      --white:  #131313;
+      --amber:  #D4954E;
+      --card:   #1E1E1E;
+      --video-overlay: linear-gradient(to right,rgba(19,19,19,0.92) 0%,rgba(19,19,19,0.72) 40%,rgba(19,19,19,0.20) 70%,rgba(19,19,19,0.05) 100%);
+      --nav-scrolled: rgba(19,19,19,0.94);
+    }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
     body {
@@ -27,377 +47,313 @@
       color: var(--ink);
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
+      transition: background 0.3s, color 0.3s;
     }
     a { color: inherit; text-decoration: none; }
 
-    /* ── Reveal ───────────────────────────────────── */
-    .reveal {
-      opacity: 0; transform: translateY(14px);
-      transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
-    }
-    .reveal.on { opacity: 1; transform: none; }
-    .d1 { transition-delay: 0.09s; }
-    .d2 { transition-delay: 0.18s; }
-    .d3 { transition-delay: 0.27s; }
+    /* ── REVEAL ──────────────────────────────────── */
+    .reveal { opacity:0; transform:translateY(14px); transition:opacity 0.6s var(--ease),transform 0.6s var(--ease); }
+    .reveal.on { opacity:1; transform:none; }
+    .d1{transition-delay:.09s} .d2{transition-delay:.18s} .d3{transition-delay:.27s}
 
     /* ── NAV ──────────────────────────────────────── */
     nav {
       position: fixed; inset: 0 0 auto 0; z-index: 99;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 1rem 5vw;
+      padding: 0.9rem 4vw; gap: 1rem;
       transition: background 0.3s, border-color 0.3s;
       border-bottom: 1px solid transparent;
     }
-    nav.scrolled {
-      background: rgba(255,255,255,0.94);
-      backdrop-filter: blur(16px);
-      border-color: var(--line);
-    }
-    .nav-name { font-size: 0.9rem; font-weight: 600; letter-spacing: -0.01em; }
-    .nav-links { display: flex; gap: 2rem; list-style: none; }
-    .nav-links a { font-size: 0.77rem; font-weight: 400; color: var(--mid); transition: color 0.2s; }
+    nav.scrolled { background: var(--nav-scrolled); backdrop-filter: blur(16px); border-color: var(--line); }
+    .nav-name { font-size: 0.9rem; font-weight: 600; letter-spacing: -0.01em; white-space: nowrap; }
+    .nav-links { display: flex; gap: 1.75rem; list-style: none; }
+    .nav-links a { font-size: 0.76rem; font-weight: 400; color: var(--mid); transition: color 0.2s; }
     .nav-links a:hover { color: var(--ink); }
+
+    /* Nav controls group */
+    .nav-controls { display: flex; align-items: center; gap: 0.5rem; }
+
+    /* Language picker */
+    .lang-picker { position: relative; }
+    .lang-btn {
+      display: flex; align-items: center; gap: 0.3rem;
+      font-family: inherit; font-size: 0.73rem; font-weight: 500;
+      color: var(--mid); background: transparent;
+      border: 1px solid var(--line); border-radius: 6px;
+      padding: 0.38rem 0.65rem; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .lang-btn:hover { color: var(--ink); border-color: var(--muted); }
+    .lang-btn svg { width: 10px; height: 10px; fill: var(--muted); }
+    .lang-dropdown {
+      display: none; position: absolute; top: calc(100% + 6px); right: 0;
+      background: var(--card); border: 1px solid var(--line);
+      border-radius: 8px; overflow: hidden;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      min-width: 120px; z-index: 10;
+    }
+    .lang-picker.open .lang-dropdown { display: block; }
+    .lang-option {
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.6rem 0.9rem;
+      font-size: 0.75rem; font-weight: 400; color: var(--mid);
+      cursor: pointer; transition: background 0.15s;
+    }
+    .lang-option:hover { background: var(--bg); color: var(--ink); }
+    .lang-option.active { color: var(--amber); font-weight: 500; }
+
+    /* Theme toggle */
+    .theme-toggle {
+      display: flex; align-items: center; justify-content: center;
+      width: 2rem; height: 2rem;
+      border: 1px solid var(--line); border-radius: 6px;
+      background: transparent; cursor: pointer;
+      color: var(--mid); transition: all 0.2s;
+    }
+    .theme-toggle:hover { color: var(--ink); border-color: var(--muted); }
+    .theme-toggle svg { width: 14px; height: 14px; fill: currentColor; }
+    .icon-sun { display: none; }
+    .icon-moon { display: block; }
+    [data-theme="dark"] .icon-sun  { display: block; }
+    [data-theme="dark"] .icon-moon { display: none; }
+
+    /* CTA button */
     .nav-cta {
-      font-size: 0.77rem; font-weight: 500;
-      background: var(--ink); color: #fff;
-      padding: 0.48rem 1rem; border-radius: 6px;
-      transition: opacity 0.2s;
+      font-size: 0.76rem; font-weight: 500;
+      background: var(--ink); color: var(--white);
+      padding: 0.45rem 0.95rem; border-radius: 6px;
+      transition: opacity 0.2s; white-space: nowrap;
     }
     .nav-cta:hover { opacity: 0.78; }
+    [data-theme="dark"] .nav-cta { color: #111; background: var(--ink); }
 
-    /* ── HERO — full-bleed video background ──────── */
-    #hero {
-      position: relative;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      overflow: hidden;
-    }
+    /* ── HERO ─────────────────────────────────────── */
+    #hero { position:relative; min-height:100vh; display:flex; align-items:center; overflow:hidden; }
     .hero-left {
-      position: relative; z-index: 2;
-      display: flex; flex-direction: column; justify-content: center;
-      padding: 8rem 5vw 5rem 7vw;
-      max-width: 680px;
+      position:relative; z-index:2;
+      display:flex; flex-direction:column; justify-content:center;
+      padding: 8rem 5vw 5rem 7vw; max-width: 660px;
     }
     .hero-status {
-      display: inline-flex; align-items: center; gap: 0.45rem;
-      font-size: 0.7rem; font-weight: 500; letter-spacing: 0.09em;
-      text-transform: uppercase; color: var(--muted);
-      margin-bottom: 2rem;
+      display:inline-flex; align-items:center; gap:0.45rem;
+      font-size:0.7rem; font-weight:500; letter-spacing:0.09em;
+      text-transform:uppercase; color:var(--mid); margin-bottom:1.75rem;
       animation: rise 0.8s var(--ease) 0.1s both;
     }
-    .hero-dot { width: 5px; height: 5px; background: #4ADE80; border-radius: 50%; flex-shrink: 0; }
+    .hero-dot { width:5px; height:5px; background:#4ADE80; border-radius:50%; flex-shrink:0; }
     .hero-h1 {
-      font-family: 'Instrument Serif', Georgia, serif;
-      font-size: clamp(2.6rem, 4vw, 4rem);
-      font-weight: 400; line-height: 1.1;
-      letter-spacing: -0.025em; color: var(--ink);
-      margin-bottom: 1.25rem;
-      animation: rise 0.8s var(--ease) 0.2s both;
+      font-family:'Instrument Serif',Georgia,serif;
+      font-size:clamp(2.6rem,4vw,4rem); font-weight:400;
+      line-height:1.1; letter-spacing:-0.025em; color:var(--ink);
+      margin-bottom:1.1rem; animation:rise 0.8s var(--ease) 0.2s both;
     }
-    .hero-h1 em { font-style: italic; color: var(--muted); }
+    .hero-h1 em { font-style:italic; color:var(--muted); }
     .hero-sub {
-      font-size: 0.97rem; font-weight: 300; line-height: 1.8;
-      color: var(--mid); max-width: 42ch;
-      margin-bottom: 2.25rem;
-      animation: rise 0.8s var(--ease) 0.3s both;
+      font-size:0.96rem; font-weight:300; line-height:1.8;
+      color:var(--mid); max-width:44ch; margin-bottom:2rem;
+      animation:rise 0.8s var(--ease) 0.3s both;
     }
-    .hero-actions {
-      display: flex; gap: 0.6rem; flex-wrap: wrap;
-      animation: rise 0.8s var(--ease) 0.4s both;
-    }
+    .hero-actions { display:flex; gap:0.6rem; flex-wrap:wrap; animation:rise 0.8s var(--ease) 0.4s both; }
+
+    /* Buttons */
     .btn {
-      display: inline-flex; align-items: center; gap: 0.4rem;
-      padding: 0.68rem 1.2rem; border-radius: 7px;
-      font-family: inherit; font-size: 0.8rem; font-weight: 500;
-      cursor: pointer; border: none;
-      transition: all 0.2s var(--ease);
+      display:inline-flex; align-items:center; gap:0.4rem;
+      padding:0.65rem 1.2rem; border-radius:7px;
+      font-family:inherit; font-size:0.79rem; font-weight:500;
+      cursor:pointer; border:none; transition:all 0.2s var(--ease);
     }
-    .btn svg { width: 13px; height: 13px; fill: currentColor; flex-shrink: 0; }
-    .btn-dark  { background: var(--ink); color: #fff; }
-    .btn-dark:hover { background: #2c2c2c; transform: translateY(-1px); }
-    .btn-line  { background: transparent; color: var(--mid); border: 1px solid var(--line); }
-    .btn-line:hover { border-color: #bbb; color: var(--ink); transform: translateY(-1px); }
-    .btn-cream { background: var(--warm); color: var(--ink); }
-    .btn-cream:hover { background: #EBE4D8; transform: translateY(-1px); }
-    .btn-ghost-lt {
-      background: transparent; color: rgba(255,255,255,0.75);
-      border: 1px solid rgba(255,255,255,0.25);
-    }
-    .btn-ghost-lt:hover { border-color: rgba(255,255,255,0.6); color: #fff; transform: translateY(-1px); }
+    .btn svg { width:13px; height:13px; fill:currentColor; flex-shrink:0; }
+    .btn-dark { background:var(--ink); color:var(--white); }
+    [data-theme="dark"] .btn-dark { color: #111; }
+    .btn-dark:hover { opacity:0.82; transform:translateY(-1px); }
+    .btn-line { background:transparent; color:var(--mid); border:1px solid var(--line); }
+    .btn-line:hover { border-color:var(--muted); color:var(--ink); transform:translateY(-1px); }
+    .btn-cream { background:var(--warm); color:var(--ink); }
+    .btn-cream:hover { filter:brightness(0.96); transform:translateY(-1px); }
+    .btn-ghost-lt { background:transparent; color:rgba(255,255,255,0.75); border:1px solid rgba(255,255,255,0.25); }
+    .btn-ghost-lt:hover { border-color:rgba(255,255,255,0.6); color:#fff; transform:translateY(-1px); }
 
-    /* Full-bleed video background */
-    .hero-video {
-      position: absolute; inset: 0; z-index: 0;
-    }
-    .hero-video video {
-      width: 100%; height: 100%;
-      object-fit: cover; object-position: center 50%;
-      display: block;
-    }
-    /* Overlay: left side heavier (text legibility), right side lighter */
+    /* Video */
+    .hero-video { position:absolute; inset:0; z-index:0; }
+    .hero-video video { width:100%; height:100%; object-fit:cover; display:block; }
     .hero-video::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(
-        to right,
-        rgba(255,255,255,0.92) 0%,
-        rgba(255,255,255,0.75) 40%,
-        rgba(255,255,255,0.25) 70%,
-        rgba(255,255,255,0.08) 100%
-      );
+      content:''; position:absolute; inset:0;
+      background: var(--video-overlay);
     }
 
-    @keyframes rise { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
+    @keyframes rise { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:none} }
 
-    /* ── SHARED LAYOUT ────────────────────────────── */
-    .wrap { max-width: 860px; margin: 0 auto; padding: 0 5vw; }
-    .label {
-      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.13em;
-      text-transform: uppercase; color: var(--amber); margin-bottom: 0.55rem;
-    }
-    .sh {
-      font-family: 'Instrument Serif', serif;
-      font-size: clamp(1.65rem, 2.8vw, 2.2rem);
-      font-weight: 400; line-height: 1.2; letter-spacing: -0.015em; color: var(--ink);
-    }
-    .sh em { font-style: italic; color: var(--muted); }
+    /* ── SHARED ───────────────────────────────────── */
+    .wrap { max-width:860px; margin:0 auto; padding:0 5vw; }
+    .label { font-size:0.67rem; font-weight:600; letter-spacing:0.13em; text-transform:uppercase; color:var(--amber); margin-bottom:0.5rem; }
+    .sh { font-family:'Instrument Serif',serif; font-size:clamp(1.6rem,2.8vw,2.2rem); font-weight:400; line-height:1.2; letter-spacing:-0.015em; color:var(--ink); }
+    .sh em { font-style:italic; color:var(--muted); }
 
     /* ── INTRO ────────────────────────────────────── */
-    #intro { padding: 5rem 0; border-top: 1px solid var(--line); }
-    .intro-grid {
-      display: grid; grid-template-columns: 1fr 1.55fr;
-      gap: 5rem; align-items: start;
-    }
-    .intro-right p {
-      font-size: 0.95rem; font-weight: 300; line-height: 1.9;
-      color: var(--mid); margin-bottom: 0.9rem;
-    }
-    .intro-right p:last-child { margin-bottom: 0; }
-    .intro-right strong { font-weight: 600; color: var(--ink); }
+    #intro { padding:5rem 0; border-top:1px solid var(--line); }
+    .intro-grid { display:grid; grid-template-columns:1fr 1.55fr; gap:5rem; align-items:start; }
+    .intro-right p { font-size:0.94rem; font-weight:300; line-height:1.9; color:var(--mid); margin-bottom:0.85rem; }
+    .intro-right p:last-child { margin-bottom:0; }
+    .intro-right strong { font-weight:600; color:var(--ink); }
 
     /* ── PILLARS ──────────────────────────────────── */
-    #pillars { padding: 0 0 5rem; }
-    .pillars-grid {
-      display: grid; grid-template-columns: repeat(3,1fr);
-      gap: 1px; background: var(--line);
-      border: 1px solid var(--line); border-radius: 10px; overflow: hidden;
-      margin-top: 0;
-    }
-    .pillar {
-      background: var(--white); padding: 1.75rem 1.5rem;
-      transition: background 0.2s;
-    }
-    .pillar:hover { background: var(--bg); }
-    .pillar-icon {
-      width: 2.2rem; height: 2.2rem; margin-bottom: 1rem;
-      color: var(--ink);
-    }
-    .pillar-icon svg { width: 100%; height: 100%; }
-    .pillar-name { font-size: 0.88rem; font-weight: 600; color: var(--ink); margin-bottom: 0.35rem; }
-    .pillar-desc { font-size: 0.78rem; font-weight: 300; color: var(--muted); line-height: 1.65; }
+    #pillars { padding:0 0 5rem; }
+    .pillars-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:10px; overflow:hidden; }
+    .pillar { background:var(--card); padding:1.75rem 1.5rem; transition:background 0.2s; }
+    .pillar:hover { background:var(--bg); }
+    .pillar-icon { width:2rem; height:2rem; margin-bottom:0.9rem; color:var(--ink); }
+    .pillar-icon svg { width:100%; height:100%; }
+    .pillar-name { font-size:0.87rem; font-weight:600; color:var(--ink); margin-bottom:0.3rem; }
+    .pillar-desc { font-size:0.77rem; font-weight:300; color:var(--muted); line-height:1.65; }
 
     /* ── NUMBERS ──────────────────────────────────── */
-    #numbers {
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-      padding: 3.5rem 0;
-      background: var(--warm);
-    }
-    .numbers-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 2rem; }
-    .num-item { text-align: center; }
-    .num-val {
-      font-family: 'Instrument Serif', serif;
-      font-size: 2.2rem; font-weight: 400; line-height: 1;
-      color: var(--ink); letter-spacing: -0.02em;
-    }
-    .num-lbl {
-      font-size: 0.7rem; font-weight: 400; letter-spacing: 0.07em;
-      text-transform: uppercase; color: var(--muted); margin-top: 0.4rem;
-    }
+    #numbers { border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:3.5rem 0; background:var(--warm); }
+    .numbers-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2rem; }
+    .num-item { text-align:center; }
+    .num-val { font-family:'Instrument Serif',serif; font-size:2.1rem; font-weight:400; line-height:1; color:var(--ink); letter-spacing:-0.02em; }
+    .num-lbl { font-size:0.68rem; font-weight:400; letter-spacing:0.07em; text-transform:uppercase; color:var(--muted); margin-top:0.4rem; }
 
     /* ── WORK ─────────────────────────────────────── */
-    #work { padding: 5rem 0; }
-    .section-hdr { margin-bottom: 2.25rem; }
-    .work-list { display: flex; flex-direction: column; }
-    .work-item {
-      display: grid; grid-template-columns: 170px 1fr;
-      gap: 2rem; padding: 1.75rem 0;
-      border-bottom: 1px solid var(--line);
-    }
-    .work-item:first-child { border-top: 1px solid var(--line); }
-    .work-period { font-size: 0.71rem; font-weight: 400; color: var(--muted); margin-bottom: 0.2rem; }
-    .work-co { font-size: 0.86rem; font-weight: 600; color: var(--ink); }
-    .work-city { font-size: 0.71rem; font-weight: 300; color: var(--muted); }
-    .work-role {
-      font-family: 'Instrument Serif', serif;
-      font-size: 1.05rem; font-weight: 400; color: var(--ink); margin-bottom: 0.55rem;
-    }
-    .work-note { font-size: 0.83rem; font-weight: 300; color: var(--mid); line-height: 1.8; }
-    .work-pill {
-      display: inline-block; margin-top: 0.7rem;
-      padding: 0.2rem 0.65rem; border-radius: 20px;
-      font-size: 0.67rem; font-weight: 500;
-      border: 1px solid var(--line); color: var(--muted);
-    }
-    .work-pill.live { background: #F0FDF4; border-color: #BBF7D0; color: #15803D; }
+    #work { padding:5rem 0; }
+    .section-hdr { margin-bottom:2.25rem; }
+    .work-list { display:flex; flex-direction:column; }
+    .work-item { display:grid; grid-template-columns:160px 1fr; gap:2rem; padding:1.75rem 0; border-bottom:1px solid var(--line); }
+    .work-item:first-child { border-top:1px solid var(--line); }
+    .work-period { font-size:0.7rem; font-weight:400; color:var(--muted); margin-bottom:0.2rem; }
+    .work-co { font-size:0.85rem; font-weight:600; color:var(--ink); }
+    .work-city { font-size:0.7rem; font-weight:300; color:var(--muted); }
+    .work-role { font-family:'Instrument Serif',serif; font-size:1.05rem; font-weight:400; color:var(--ink); margin-bottom:0.5rem; }
+    .work-note { font-size:0.82rem; font-weight:300; color:var(--mid); line-height:1.8; }
+    .work-pill { display:inline-block; margin-top:0.65rem; padding:0.18rem 0.65rem; border-radius:20px; font-size:0.67rem; font-weight:500; border:1px solid var(--line); color:var(--muted); }
+    .work-pill.live { background:#F0FDF4; border-color:#BBF7D0; color:#15803D; }
+    [data-theme="dark"] .work-pill.live { background:#0D2B1A; border-color:#1A4D2E; color:#4ADE80; }
 
     /* ── HUMAN ────────────────────────────────────── */
-    #human { padding: 5rem 0; background: var(--bg); border-top: 1px solid var(--line); }
-    .human-grid {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 4rem; align-items: center;
-    }
-    .human-img { width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 10px; display: block; }
-    .human-right .sh { margin-bottom: 1.1rem; }
-    .human-right p {
-      font-size: 0.92rem; font-weight: 300; line-height: 1.85;
-      color: var(--mid); margin-bottom: 0.85rem;
-    }
-    .human-right p:last-of-type { margin-bottom: 1.5rem; }
-    .human-right strong { font-weight: 600; color: var(--ink); }
-    .tags-row { display: flex; flex-wrap: wrap; gap: 0.4rem; }
-    .tag {
-      display: inline-flex; align-items: center; gap: 0.35rem;
-      padding: 0.32rem 0.75rem; border-radius: 20px;
-      font-size: 0.72rem; font-weight: 400;
-      border: 1px solid var(--line); color: var(--mid);
-    }
-    .tag svg { width: 11px; height: 11px; fill: var(--muted); }
+    #human { padding:5rem 0; background:var(--bg); border-top:1px solid var(--line); }
+    .human-grid { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; }
+    .human-img { width:100%; aspect-ratio:4/5; object-fit:cover; border-radius:10px; display:block; }
+    .human-right .sh { margin-bottom:1rem; }
+    .human-right p { font-size:0.91rem; font-weight:300; line-height:1.85; color:var(--mid); margin-bottom:0.8rem; }
+    .human-right p:last-of-type { margin-bottom:1.5rem; }
+    .human-right strong { font-weight:600; color:var(--ink); }
+    .tags-row { display:flex; flex-wrap:wrap; gap:0.4rem; }
+    .tag { display:inline-flex; align-items:center; gap:0.35rem; padding:0.3rem 0.7rem; border-radius:20px; font-size:0.71rem; font-weight:400; border:1px solid var(--line); color:var(--mid); }
+    .tag svg { width:11px; height:11px; fill:var(--muted); }
 
     /* ── RECOGNITION ──────────────────────────────── */
-    #recognition { padding: 5rem 0; }
-    .rec-grid {
-      display: grid; grid-template-columns: repeat(2,1fr);
-      gap: 1px; background: var(--line);
-      border: 1px solid var(--line); border-radius: 10px; overflow: hidden;
-      margin-top: 2.25rem;
-    }
-    .rec-card {
-      background: var(--white); padding: 1.75rem;
-      display: flex; gap: 1rem; align-items: flex-start;
-      transition: background 0.2s;
-    }
-    .rec-card:hover { background: var(--bg); }
-    .rec-icon {
-      width: 2.25rem; height: 2.25rem; flex-shrink: 0;
-      background: var(--bg); border: 1px solid var(--line);
-      border-radius: 8px; display: flex; align-items: center; justify-content: center;
-      color: var(--mid);
-    }
-    .rec-icon svg { width: 15px; height: 15px; fill: currentColor; }
-    .rec-title { font-size: 0.86rem; font-weight: 600; color: var(--ink); margin-bottom: 0.3rem; }
-    .rec-desc  { font-size: 0.77rem; font-weight: 300; color: var(--muted); line-height: 1.65; }
+    #recognition { padding:5rem 0; }
+    .rec-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:10px; overflow:hidden; margin-top:2.25rem; }
+    .rec-card { background:var(--card); padding:1.75rem; display:flex; gap:1rem; align-items:flex-start; transition:background 0.2s; }
+    .rec-card:hover { background:var(--bg); }
+    .rec-icon { width:2.25rem; height:2.25rem; flex-shrink:0; background:var(--bg); border:1px solid var(--line); border-radius:8px; display:flex; align-items:center; justify-content:center; color:var(--mid); }
+    .rec-icon svg { width:15px; height:15px; fill:currentColor; }
+    .rec-title { font-size:0.85rem; font-weight:600; color:var(--ink); margin-bottom:0.28rem; }
+    .rec-desc  { font-size:0.76rem; font-weight:300; color:var(--muted); line-height:1.65; }
 
     /* ── CTA ──────────────────────────────────────── */
-    #cta {
-      padding: 6rem 0;
-      background: var(--ink); text-align: center;
-      position: relative; overflow: hidden;
-    }
-    /* Subtle grid texture */
-    #cta::before {
-      content: '';
-      position: absolute; inset: 0;
-      background-image:
-        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-      background-size: 60px 60px;
-    }
-    .cta-inner { position: relative; z-index: 2; max-width: 580px; margin: 0 auto; padding: 0 5vw; }
-    .cta-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.13em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 1rem; }
-    .cta-h {
-      font-family: 'Instrument Serif', serif;
-      font-size: clamp(1.9rem, 4vw, 2.8rem);
-      font-weight: 400; line-height: 1.15; letter-spacing: -0.02em;
-      color: #fff; margin-bottom: 1rem;
-    }
-    .cta-h em { font-style: italic; color: rgba(255,255,255,0.4); }
-    .cta-p {
-      font-size: 0.9rem; font-weight: 300; line-height: 1.8;
-      color: rgba(255,255,255,0.4); margin-bottom: 2.25rem;
-    }
-    .cta-btns { display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; }
+    #cta { padding:6rem 0; background:var(--ink); text-align:center; position:relative; overflow:hidden; }
+    #cta::before { content:''; position:absolute; inset:0; background-image:linear-gradient(rgba(255,255,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px); background-size:60px 60px; }
+    .cta-inner { position:relative; z-index:2; max-width:560px; margin:0 auto; padding:0 5vw; }
+    .cta-label { font-size:0.67rem; font-weight:600; letter-spacing:0.13em; text-transform:uppercase; color:rgba(255,255,255,0.3); margin-bottom:0.9rem; }
+    .cta-h { font-family:'Instrument Serif',serif; font-size:clamp(1.9rem,4vw,2.8rem); font-weight:400; line-height:1.15; letter-spacing:-0.02em; color:#fff; margin-bottom:0.85rem; }
+    .cta-h em { font-style:italic; color:rgba(255,255,255,0.38); }
+    .cta-p { font-size:0.89rem; font-weight:300; line-height:1.8; color:rgba(255,255,255,0.4); margin-bottom:2.25rem; }
+    .cta-btns { display:flex; gap:0.6rem; justify-content:center; flex-wrap:wrap; }
 
     /* ── FOOTER ───────────────────────────────────── */
-    footer {
-      padding: 1.5rem 5vw; background: #0C0C0C;
-      border-top: 1px solid #1E1E1E;
-      display: flex; flex-wrap: wrap; gap: 1rem;
-      align-items: center; justify-content: space-between;
-    }
-    .foot-l { font-size: 0.73rem; color: rgba(255,255,255,0.22); }
-    .foot-links { display: flex; gap: 1.5rem; list-style: none; }
-    .foot-links a { font-size: 0.71rem; color: rgba(255,255,255,0.22); transition: color 0.2s; }
-    .foot-links a:hover { color: rgba(255,255,255,0.55); }
+    footer { padding:1.5rem 4vw; background:#0C0C0C; border-top:1px solid #1E1E1E; display:flex; flex-wrap:wrap; gap:1rem; align-items:center; justify-content:space-between; }
+    .foot-l { font-size:0.71rem; color:rgba(255,255,255,0.22); }
+    .foot-links { display:flex; gap:1.5rem; list-style:none; }
+    .foot-links a { font-size:0.71rem; color:rgba(255,255,255,0.22); transition:color 0.2s; }
+    .foot-links a:hover { color:rgba(255,255,255,0.55); }
 
-    /* ── FLOAT ────────────────────────────────────── */
+    /* ── FLOAT RESUME ─────────────────────────────── */
     .float-resume {
-      position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 88;
-      background: var(--white); color: var(--ink);
-      border: 1px solid var(--line);
-      padding: 0.52rem 0.95rem; border-radius: 30px;
-      font-family: inherit; font-size: 0.71rem; font-weight: 500;
-      display: flex; align-items: center; gap: 0.38rem;
-      box-shadow: 0 2px 14px rgba(0,0,0,0.08);
-      opacity: 0; transform: translateY(6px);
-      transition: all 0.3s var(--ease);
+      position:fixed; bottom:1.5rem; right:1.5rem; z-index:88;
+      background:var(--card); color:var(--ink); border:1px solid var(--line);
+      padding:0.5rem 0.9rem; border-radius:30px;
+      font-family:inherit; font-size:0.71rem; font-weight:500;
+      display:flex; align-items:center; gap:0.38rem;
+      box-shadow:0 2px 14px rgba(0,0,0,0.08);
+      opacity:0; transform:translateY(6px); transition:all 0.3s var(--ease);
     }
-    .float-resume.on { opacity: 1; transform: none; }
-    .float-resume:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.13); transform: translateY(-1px); }
-    .float-resume svg { width: 11px; height: 11px; fill: currentColor; }
+    .float-resume.on { opacity:1; transform:none; }
+    .float-resume:hover { box-shadow:0 4px 20px rgba(0,0,0,0.13); transform:translateY(-1px); }
+    .float-resume svg { width:11px; height:11px; fill:currentColor; }
 
     /* ── RESPONSIVE ───────────────────────────────── */
-    @media (max-width: 820px) {
-      .hero-left { padding: 7rem 5vw 4rem; }
-      .intro-grid, .human-grid { grid-template-columns: 1fr; gap: 2rem; }
-      .human-img { aspect-ratio: 16/9; }
-      .pillars-grid { grid-template-columns: 1fr; }
-      .numbers-grid { grid-template-columns: 1fr 1fr; }
-      .work-item { grid-template-columns: 1fr; gap: 0.25rem; }
-      .rec-grid { grid-template-columns: 1fr; }
-      .nav-links { display: none; }
+    @media (max-width:820px) {
+      .hero-left { padding:7rem 5vw 4rem; }
+      .intro-grid,.human-grid { grid-template-columns:1fr; gap:2rem; }
+      .human-img { aspect-ratio:16/9; }
+      .pillars-grid { grid-template-columns:1fr; }
+      .numbers-grid { grid-template-columns:1fr 1fr; }
+      .work-item { grid-template-columns:1fr; gap:0.2rem; }
+      .rec-grid { grid-template-columns:1fr; }
+      .nav-links { display:none; }
+    }
+    @media (max-width:500px) {
+      .lang-btn span { display:none; }
     }
   </style>
 </head>
 <body>
 
-<!-- ─── NAV ─────────────────────────────────────────────── -->
+<!-- ─── NAV ──────────────────────────────────────────────── -->
 <nav id="nav">
   <span class="nav-name">Carlos Dilone</span>
   <ul class="nav-links">
-    <li><a href="#intro">About</a></li>
-    <li><a href="#work">Work</a></li>
-    <li><a href="#recognition">Recognition</a></li>
-    <li><a href="#cta">Connect</a></li>
+    <li><a href="#intro" data-i18n="nav_about">About</a></li>
+    <li><a href="#work" data-i18n="nav_work">Work</a></li>
+    <li><a href="#recognition" data-i18n="nav_recognition">Recognition</a></li>
+    <li><a href="#cta" data-i18n="nav_connect">Connect</a></li>
   </ul>
-  <a href="mailto:ing.dilone@gmail.com" class="nav-cta">Say hello →</a>
+  <div class="nav-controls">
+    <!-- Language picker -->
+    <div class="lang-picker" id="langPicker">
+      <button class="lang-btn" id="langBtn" aria-label="Language">
+        <span id="langLabel">EN</span>
+        <svg viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg>
+      </button>
+      <div class="lang-dropdown" id="langDropdown">
+        <div class="lang-option active" data-lang="en">🇨🇦 English</div>
+        <div class="lang-option" data-lang="fr">🇫🇷 Français</div>
+        <div class="lang-option" data-lang="pt">🇧🇷 Português</div>
+        <div class="lang-option" data-lang="es">🇪🇸 Español</div>
+      </div>
+    </div>
+    <!-- Dark/light toggle -->
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <!-- Moon (shown in light mode) -->
+      <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>
+      <!-- Sun (shown in dark mode) -->
+      <svg class="icon-sun" viewBox="0 0 24 24"><path d="M12 7a5 5 0 1 0 0 10A5 5 0 0 0 12 7zm0-5v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72 1.42 1.42M2 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+    </button>
+    <!-- CTA -->
+    <a href="mailto:ing.dilone@gmail.com" class="nav-cta" data-i18n="nav_cta">Say hello →</a>
+  </div>
 </nav>
 
-<!-- ─── HERO ─────────────────────────────────────────────── -->
+<!-- ─── HERO ──────────────────────────────────────────────── -->
 <section id="hero">
   <div class="hero-left">
     <div class="hero-status">
       <span class="hero-dot"></span>
-      Based in Toronto · Open to opportunities
+      <span data-i18n="hero_status">Toronto · Open to opportunities</span>
     </div>
-    <h1 class="hero-h1">
-      Hi, I'm Carlos.<br>
-      I build partnerships<br><em>that create value.</em>
-    </h1>
-    <p class="hero-sub">Strategic sourcing and vendor management leader with 13+ years helping organisations navigate complexity, reduce risk, and build supplier relationships that endure.</p>
+    <h1 class="hero-h1" data-i18n="hero_h1">Hi, I'm Carlos.<br>I build partnerships<br><em>that create value.</em></h1>
+    <p class="hero-sub" data-i18n="hero_sub">13+ years in strategic sourcing — helping organisations reduce risk, unlock value, and build supplier relationships that last.</p>
     <div class="hero-actions">
       <a href="mailto:ing.dilone@gmail.com" class="btn btn-dark">
         <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
-        Say hello
+        <span data-i18n="btn_hello">Say hello</span>
       </a>
-      <a href="mailto:ing.dilone@gmail.com?subject=Speaking%20Invitation" class="btn btn-line">Invite me to speak</a>
+      <a href="mailto:ing.dilone@gmail.com?subject=Speaking%20Invitation" class="btn btn-line" data-i18n="btn_speak">Invite me to speak</a>
       <a href="https://www.linkedin.com/in/cdilone/" target="_blank" rel="noopener" class="btn btn-line">LinkedIn</a>
     </div>
   </div>
-  <!-- Toronto video — full background -->
   <div class="hero-video">
-    <video autoplay muted loop playsinline>
+    <video id="heroVideo" autoplay muted playsinline>
       <source src="toronto.mp4" type="video/mp4">
     </video>
   </div>
@@ -408,95 +364,75 @@
   <div class="wrap">
     <div class="intro-grid">
       <div class="reveal">
-        <div class="label">About</div>
-        <h2 class="sh">Where strategy<br>meets <em>partnership</em></h2>
+        <div class="label" data-i18n="about_label">About</div>
+        <h2 class="sh" data-i18n="about_h">Where strategy meets <em>partnership</em></h2>
       </div>
       <div class="reveal d1">
-        <p>I've spent 13+ years at the intersection of commercial rigour and human relationships — from manufacturing floors in Belgium and Sweden to the boardrooms of Canada's largest institutions.</p>
-        <p>Today I lead strategic sourcing at <strong>TD Bank</strong>, managing a $100M+ CAD annual spend portfolio in one of the country's most regulated environments. Previously at <strong>Indigo</strong>, I built a vendor platform that served 3,000+ suppliers and delivered $2.6M in savings within eight months.</p>
-        <p>I speak at procurement summits, mentor professionals entering the Canadian market, and believe that the best commercial outcomes are built on trust as much as terms.</p>
+        <p data-i18n="about_p1">Over 13 years, I've worked at the intersection of commercial discipline and human relationships — from manufacturing floors in Belgium and Sweden to the boardrooms of Canada's largest institutions.</p>
+        <p data-i18n="about_p2">I currently lead strategic sourcing at <strong>TD Bank</strong>, overseeing a $100M+ CAD spend portfolio in one of Canada's most regulated environments. Previously at <strong>Indigo</strong>, I built a vendor platform for 3,000+ suppliers and delivered $2.6M in savings within eight months.</p>
+        <p data-i18n="about_p3">I speak at procurement summits, mentor professionals entering the Canadian market, and believe that lasting commercial outcomes are built on trust as much as terms.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ─── PILLARS ───────────────────────────────────────────── -->
+<!-- ─── PILLARS ────────────────────────────────────────────── -->
 <section id="pillars">
   <div class="wrap">
     <div class="pillars-grid">
-
       <div class="pillar reveal">
         <div class="pillar-icon">
-          <!-- Shield / Governance -->
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M12 2L3 7v5c0 5 4 9.3 9 10.3C17 21.3 21 17 21 12V7L12 2z"/>
             <path d="M9 12l2 2 4-4"/>
           </svg>
         </div>
-        <div class="pillar-name">Risk &amp; Governance</div>
-        <div class="pillar-desc">Third-party risk management and compliance in regulated financial environments.</div>
+        <div class="pillar-name" data-i18n="p1_name">Risk &amp; Governance</div>
+        <div class="pillar-desc" data-i18n="p1_desc">Third-party risk and compliance management in regulated financial environments.</div>
       </div>
-
       <div class="pillar reveal d1">
         <div class="pillar-icon">
-          <!-- Network / Partnership -->
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="9" cy="7" r="2"/><circle cx="15" cy="17" r="2"/><circle cx="19" cy="7" r="2"/>
             <path d="M11 7h6M10.5 8.5L13.5 16"/><path d="M5 12c0-3 2-5 4-5"/>
           </svg>
         </div>
-        <div class="pillar-name">Supplier Partnerships</div>
-        <div class="pillar-desc">Building relationships that perform beyond the contract, grounded in accountability and mutual value.</div>
+        <div class="pillar-name" data-i18n="p2_name">Supplier Partnerships</div>
+        <div class="pillar-desc" data-i18n="p2_desc">Relationships that endure beyond the contract — built on accountability and shared value.</div>
       </div>
-
       <div class="pillar reveal d2">
         <div class="pillar-icon">
-          <!-- Analytics / Chart -->
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M3 20h18M5 20V14M9 20V8M13 20V11M17 20V4"/>
           </svg>
         </div>
-        <div class="pillar-name">Procurement Analytics</div>
-        <div class="pillar-desc">Data-led sourcing decisions that surface savings and governance opportunities others miss.</div>
+        <div class="pillar-name" data-i18n="p3_name">Procurement Analytics</div>
+        <div class="pillar-desc" data-i18n="p3_desc">Data-driven decisions that surface savings and opportunities others overlook.</div>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- ─── NUMBERS ───────────────────────────────────────────── -->
+<!-- ─── NUMBERS ────────────────────────────────────────────── -->
 <section id="numbers">
   <div class="wrap">
     <div class="numbers-grid">
-      <div class="num-item reveal">
-        <div class="num-val">$100M+</div>
-        <div class="num-lbl">Annual spend managed</div>
-      </div>
-      <div class="num-item reveal d1">
-        <div class="num-val">$2.6M</div>
-        <div class="num-lbl">Savings in 8 months</div>
-      </div>
-      <div class="num-item reveal d2">
-        <div class="num-val">3,000+</div>
-        <div class="num-lbl">Vendors onboarded</div>
-      </div>
-      <div class="num-item reveal d3">
-        <div class="num-val">13 yrs</div>
-        <div class="num-lbl">Global experience</div>
-      </div>
+      <div class="num-item reveal"><div class="num-val">$100M+</div><div class="num-lbl" data-i18n="n1">Annual spend managed</div></div>
+      <div class="num-item reveal d1"><div class="num-val">$2.6M</div><div class="num-lbl" data-i18n="n2">Savings in 8 months</div></div>
+      <div class="num-item reveal d2"><div class="num-val">3,000+</div><div class="num-lbl" data-i18n="n3">Vendors onboarded</div></div>
+      <div class="num-item reveal d3"><div class="num-val">13 yrs</div><div class="num-lbl" data-i18n="n4">Global experience</div></div>
     </div>
   </div>
 </section>
 
-<!-- ─── WORK ──────────────────────────────────────────────── -->
+<!-- ─── WORK ───────────────────────────────────────────────── -->
 <section id="work">
   <div class="wrap">
     <div class="section-hdr">
-      <div class="label reveal">Experience</div>
-      <h2 class="sh reveal d1">Career <em>highlights</em></h2>
+      <div class="label reveal" data-i18n="work_label">Experience</div>
+      <h2 class="sh reveal d1" data-i18n="work_h">Career <em>highlights</em></h2>
     </div>
     <div class="work-list">
-
       <div class="work-item reveal">
         <div>
           <div class="work-period">2025 — Present</div>
@@ -505,11 +441,10 @@
         </div>
         <div>
           <div class="work-role">Strategic Sourcing Manager</div>
-          <div class="work-note">Leading strategic sourcing for professional services across a $100M+ CAD portfolio in a highly regulated environment. Partnering with legal, risk, and business teams to deliver cost discipline, governance, and vendor accountability at scale.</div>
-          <span class="work-pill live">● Current</span>
+          <div class="work-note" data-i18n="w1_note">Leading sourcing for professional services across a $100M+ CAD portfolio. Partnering with legal, risk, and business stakeholders to drive cost discipline, governance, and supplier accountability.</div>
+          <span class="work-pill live" data-i18n="w1_pill">● Current</span>
         </div>
       </div>
-
       <div class="work-item reveal">
         <div>
           <div class="work-period">2021 — 2025</div>
@@ -517,179 +452,317 @@
           <div class="work-city">Toronto, ON</div>
         </div>
         <div>
-          <div class="work-role">Strategic Sourcing Manager &amp; Vendor Relations Lead</div>
-          <div class="work-note">Progressed from building a self-serve onboarding platform for 3,000+ vendors (reducing onboarding time by 90%) to leading strategic sourcing — delivering $2.6M in savings in under a year through negotiations, demand rationalisation, and process redesign.</div>
+          <div class="work-role" data-i18n="w2_role">Sourcing Manager → Vendor Relations Lead</div>
+          <div class="work-note" data-i18n="w2_note">Built a vendor onboarding platform for 3,000+ suppliers (90% faster processing), then stepped into strategic sourcing — delivering $2.6M in savings through negotiation, demand rationalisation, and process redesign.</div>
           <span class="work-pill">$2.6M saved · 3,000+ vendors</span>
         </div>
       </div>
-
       <div class="work-item reveal">
         <div>
           <div class="work-period">2012 — 2014</div>
-          <div class="work-co">Husqvarna AB · ArcelorMittal</div>
+          <div class="work-co">Husqvarna · ArcelorMittal</div>
           <div class="work-city">Stockholm · Gent</div>
         </div>
         <div>
-          <div class="work-role">Global Sourcing &amp; Program Analyst</div>
-          <div class="work-note">Foundational years in global sourcing across European manufacturing — delivering €220K in savings at Husqvarna through price variation analysis, and supporting EMEA/APAC production programmes at ArcelorMittal.</div>
+          <div class="work-role" data-i18n="w3_role">Global Sourcing &amp; Program Analyst</div>
+          <div class="work-note" data-i18n="w3_note">Early career grounding in global sourcing across European manufacturing — €220K in savings at Husqvarna, and EMEA/APAC programme support at ArcelorMittal.</div>
           <span class="work-pill">Europe · €220K savings</span>
         </div>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- ─── HUMAN ──────────────────────────────────────────────── -->
+<!-- ─── HUMAN ───────────────────────────────────────────────── -->
 <section id="human">
   <div class="wrap">
     <div class="human-grid">
       <div class="reveal">
-        <img
-          src="carlos.jpg"
-          alt="Carlos Dilone"
-          class="human-img"
-          loading="lazy"
-        />
+        <img src="carlos.jpg" alt="Carlos Dilone" class="human-img" loading="lazy"/>
       </div>
       <div class="human-right reveal d1">
-        <div class="label">Beyond the resume</div>
-        <h2 class="sh">Globally <em>minded</em></h2>
-        <p>I grew up in the Dominican Republic, studied across Europe on an Erasmus scholarship, and have built a career across five countries. That international perspective shapes how I approach every negotiation, relationship, and challenge.</p>
-        <p>I mentor Latin professionals entering the Canadian market through <strong>Hispanotech Canada</strong>, and I speak at procurement events because good sourcing — done right — deserves broader recognition.</p>
+        <div class="label" data-i18n="human_label">Beyond the resume</div>
+        <h2 class="sh" data-i18n="human_h">Globally <em>minded</em></h2>
+        <p data-i18n="human_p1">I grew up in the Dominican Republic, studied across Europe on an Erasmus scholarship, and have built my career across five countries. That global perspective shapes how I approach every negotiation and relationship.</p>
+        <p data-i18n="human_p2">I mentor Latin professionals entering the Canadian market through <strong>Hispanotech Canada</strong>, and speak at procurement events because strategic sourcing — done well — deserves a bigger stage.</p>
         <div class="tags-row">
-
-          <span class="tag">
-            <!-- Globe icon -->
-            <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zm0 2c.9 0 2 .8 2.9 2.7H9.1C10 6.8 11.1 4 12 4zm-3.8 4.7h7.6c.3.9.5 1.9.6 3H8.6c0-1.1.3-2.1.6-3zM2 12c0-.3 0-.7.1-1h3.5c0 .7.1 1.4.2 2H2.3c-.2-.6-.3-1.3-.3-1zm10 8c-.9 0-2-.8-2.9-2.7h5.8C13.9 19.2 12.9 20 12 20zm-3.6-4.7c-.3-.9-.5-1.9-.6-3h8.4c-.1 1.1-.3 2.1-.6 3H8.4zm9 2.4c.5-1 .8-2.1.9-3.4H21.9a8 8 0 0 1-4.5 3.4zm1-5.4c.1-.6.2-1.3.2-2H22c0 .3.1.7.1 1v.3l-.1.7h-2.7zM5.6 8.7A8 8 0 0 1 10 5.3c-.5 1-.9 2.1-1 3.4H5.6zm-.2 5.3H2.1A8 8 0 0 1 5.7 10h3.2c-.1.6-.2 1.3-.2 2v1.3z"/></svg>
-            5 countries
-          </span>
-
-          <span class="tag">
-            <!-- Mic icon -->
-            <svg viewBox="0 0 24 24"><path d="M12 1a4 4 0 0 0-4 4v6a4 4 0 0 0 8 0V5a4 4 0 0 0-4-4zm6 10a6 6 0 0 1-12 0H4a8 8 0 0 0 7 7.93V22h2v-3.07A8 8 0 0 0 20 11h-2z"/></svg>
-            SIG Speaker ×3
-          </span>
-
-          <span class="tag">
-            <!-- Graduation cap icon -->
-            <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zm0 12.5L4.5 11l-.5.27V17c0 1.1 3.58 3 8 3s8-1.9 8-3v-5.73l-.5-.27L12 15.5z"/></svg>
-            Erasmus Mundus
-          </span>
-
-          <span class="tag">
-            <!-- People icon -->
-            <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-            Mentor
-          </span>
-
+          <span class="tag"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zm0 2c.9 0 2 .8 2.9 2.7H9.1C10 6.8 11.1 4 12 4zm-3.8 4.7h7.6c.3.9.5 1.9.6 3H8.6c0-1.1.3-2.1.6-3zM2 12c0-.3 0-.7.1-1h3.5c0 .7.1 1.4.2 2H2.3c-.2-.6-.3-1.3-.3-1zm10 8c-.9 0-2-.8-2.9-2.7h5.8C13.9 19.2 12.9 20 12 20zm-3.6-4.7c-.3-.9-.5-1.9-.6-3h8.4c-.1 1.1-.3 2.1-.6 3H8.4zm9 2.4c.5-1 .8-2.1.9-3.4H21.9a8 8 0 0 1-4.5 3.4zm1-5.4c.1-.6.2-1.3.2-2H22c0 .3.1.7.1 1v.3l-.1.7h-2.7zM5.6 8.7A8 8 0 0 1 10 5.3c-.5 1-.9 2.1-1 3.4H5.6zm-.2 5.3H2.1A8 8 0 0 1 5.7 10h3.2c-.1.6-.2 1.3-.2 2v1.3z"/></svg><span data-i18n="tag1">5 countries</span></span>
+          <span class="tag"><svg viewBox="0 0 24 24"><path d="M12 1a4 4 0 0 0-4 4v6a4 4 0 0 0 8 0V5a4 4 0 0 0-4-4zm6 10a6 6 0 0 1-12 0H4a8 8 0 0 0 7 7.93V22h2v-3.07A8 8 0 0 0 20 11h-2z"/></svg><span data-i18n="tag2">SIG Speaker ×3</span></span>
+          <span class="tag"><svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zm0 12.5L4.5 11l-.5.27V17c0 1.1 3.58 3 8 3s8-1.9 8-3v-5.73l-.5-.27L12 15.5z"/></svg><span data-i18n="tag3">Erasmus Mundus</span></span>
+          <span class="tag"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg><span data-i18n="tag4">Mentor</span></span>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ─── RECOGNITION ───────────────────────────────────────── -->
+<!-- ─── RECOGNITION ────────────────────────────────────────── -->
 <section id="recognition">
   <div class="wrap">
-    <div class="label reveal">Recognition &amp; Leadership</div>
-    <h2 class="sh reveal d1">Speaking &amp; <em>giving back</em></h2>
+    <div class="label reveal" data-i18n="rec_label">Recognition &amp; Leadership</div>
+    <h2 class="sh reveal d1" data-i18n="rec_h">Speaking &amp; <em>giving back</em></h2>
     <div class="rec-grid">
-
       <div class="rec-card reveal">
-        <div class="rec-icon">
-          <!-- Microphone -->
-          <svg viewBox="0 0 24 24"><path d="M12 1a4 4 0 0 0-4 4v6a4 4 0 0 0 8 0V5a4 4 0 0 0-4-4zm6 10a6 6 0 0 1-12 0H4a8 8 0 0 0 7 7.93V22h2v-3.07A8 8 0 0 0 20 11h-2z"/></svg>
-        </div>
+        <div class="rec-icon"><svg viewBox="0 0 24 24"><path d="M12 1a4 4 0 0 0-4 4v6a4 4 0 0 0 8 0V5a4 4 0 0 0-4-4zm6 10a6 6 0 0 1-12 0H4a8 8 0 0 0 7 7.93V22h2v-3.07A8 8 0 0 0 20 11h-2z"/></svg></div>
         <div>
-          <div class="rec-title">SIG Global Executive Summit · 2022–2024</div>
-          <div class="rec-desc">Featured speaker at the premier sourcing and procurement leadership forum for three consecutive years.</div>
+          <div class="rec-title" data-i18n="r1_title">SIG Global Executive Summit · 2022–2024</div>
+          <div class="rec-desc" data-i18n="r1_desc">Speaker at the premier global sourcing and procurement leadership forum for three consecutive years.</div>
         </div>
       </div>
-
       <div class="rec-card reveal d1">
-        <div class="rec-icon">
-          <!-- Star / Award -->
-          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        </div>
+        <div class="rec-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
         <div>
-          <div class="rec-title">Erasmus Mundus Ambassador</div>
-          <div class="rec-desc">High Merit Scholar at Politecnico di Milano. Dual MSc across Heriot-Watt University and Universidad de Alcalá.</div>
+          <div class="rec-title" data-i18n="r2_title">Erasmus Mundus Ambassador</div>
+          <div class="rec-desc" data-i18n="r2_desc">High Merit Scholar at Politecnico di Milano. Dual MSc from Heriot-Watt University and Universidad de Alcalá.</div>
         </div>
       </div>
-
       <div class="rec-card reveal d2">
-        <div class="rec-icon">
-          <!-- People / Mentor -->
-          <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
-        </div>
+        <div class="rec-icon"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg></div>
         <div>
-          <div class="rec-title">Mentor · Hispanotech Canada</div>
-          <div class="rec-desc">Supporting Latin professionals in building meaningful careers in the Canadian business landscape.</div>
+          <div class="rec-title" data-i18n="r3_title">Mentor · Hispanotech Canada</div>
+          <div class="rec-desc" data-i18n="r3_desc">Guiding Latin professionals as they build meaningful careers in the Canadian business landscape.</div>
         </div>
       </div>
-
       <div class="rec-card reveal d3">
-        <div class="rec-icon">
-          <!-- Leaf / Growth -->
-          <svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 3-11 8 0 0-2-5 4-7 0 0-3 1-4 6 0 0 5-4 9-1 0 0-3-6-11-1z"/></svg>
-        </div>
+        <div class="rec-icon"><svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 3-11 8 0 0-2-5 4-7 0 0-3 1-4 6 0 0 5-4 9-1 0 0-3-6-11-1z"/></svg></div>
         <div>
-          <div class="rec-title">EduAction Gerdau · AIESEC Brazil</div>
-          <div class="rec-desc">Leadership development facilitator — investing in the next generation of globally minded professionals.</div>
+          <div class="rec-title" data-i18n="r4_title">EduAction Gerdau · AIESEC Brazil</div>
+          <div class="rec-desc" data-i18n="r4_desc">Leadership facilitator committed to developing the next generation of globally minded professionals.</div>
         </div>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- ─── CTA ───────────────────────────────────────────────── -->
+<!-- ─── CTA ────────────────────────────────────────────────── -->
 <section id="cta">
   <div class="cta-inner reveal">
-    <div class="cta-label">Get in touch</div>
-    <h2 class="cta-h">Let's build something<br><em>meaningful together</em></h2>
-    <p class="cta-p">Whether you're looking for a sourcing leader, a speaker for your next event, or simply want to connect — I'd genuinely love to hear from you.</p>
+    <div class="cta-label" data-i18n="cta_label">Get in touch</div>
+    <h2 class="cta-h" data-i18n="cta_h">Let's build something<br><em>meaningful together</em></h2>
+    <p class="cta-p" data-i18n="cta_p">Looking to hire a sourcing leader, book a speaker, or simply connect? I'd love to hear from you.</p>
     <div class="cta-btns">
       <a href="mailto:ing.dilone@gmail.com" class="btn btn-cream">
         <svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
-        Say hello
+        <span data-i18n="btn_hello">Say hello</span>
       </a>
-      <a href="mailto:ing.dilone@gmail.com?subject=Speaking%20Invitation%20—%20[Event]" class="btn btn-ghost-lt">Invite me to speak</a>
+      <a href="mailto:ing.dilone@gmail.com?subject=Speaking%20Invitation" class="btn btn-ghost-lt" data-i18n="btn_speak">Invite me to speak</a>
       <a href="https://www.linkedin.com/in/cdilone/" target="_blank" rel="noopener" class="btn btn-ghost-lt">LinkedIn</a>
     </div>
   </div>
 </section>
 
-<!-- ─── FOOTER ────────────────────────────────────────────── -->
+<!-- ─── FOOTER ─────────────────────────────────────────────── -->
 <footer>
   <span class="foot-l">© 2026 Carlos Dilone · Toronto, Canada</span>
   <ul class="foot-links">
-    <li><a href="#intro">About</a></li>
-    <li><a href="#work">Work</a></li>
-    <li><a href="#recognition">Recognition</a></li>
-    <li><a href="#cta">Connect</a></li>
+    <li><a href="#intro" data-i18n="nav_about">About</a></li>
+    <li><a href="#work" data-i18n="nav_work">Work</a></li>
+    <li><a href="#recognition" data-i18n="nav_recognition">Recognition</a></li>
+    <li><a href="#cta" data-i18n="nav_connect">Connect</a></li>
   </ul>
 </footer>
 
-<!-- ─── FLOAT RESUME ──────────────────────────────────────── -->
+<!-- ─── FLOAT RESUME ───────────────────────────────────────── -->
 <a href="/Users/carlosdilone/Downloads/Resume Carlos 2026_Financial Services.pdf" download class="float-resume" id="fr">
   <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-  Resume
+  <span data-i18n="resume_btn">Resume</span>
 </a>
 
 <script>
-  const nav = document.getElementById('nav');
-  const fr  = document.getElementById('fr');
-  window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 55);
-    fr.classList.toggle('on', window.scrollY > 380);
-  }, { passive: true });
+/* ── VIDEO: play once, freeze on last frame ─────────────────── */
+const vid = document.getElementById('heroVideo');
+vid.addEventListener('ended', () => {
+  vid.pause();
+  // seek to just before end so it holds the final frame cleanly
+  vid.currentTime = vid.duration - 0.001;
+});
 
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } });
-  }, { threshold: 0.1, rootMargin: '0px 0px -20px 0px' });
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+/* ── SCROLL BEHAVIOURS ───────────────────────────────────── */
+const nav = document.getElementById('nav');
+const fr  = document.getElementById('fr');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 55);
+  fr.classList.toggle('on', window.scrollY > 380);
+}, { passive: true });
+
+/* ── REVEAL ON SCROLL ────────────────────────────────────── */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } });
+}, { threshold: 0.1, rootMargin: '0px 0px -20px 0px' });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ── DARK / LIGHT TOGGLE ─────────────────────────────────── */
+document.getElementById('themeToggle').addEventListener('click', () => {
+  const html = document.documentElement;
+  html.dataset.theme = html.dataset.theme === 'dark' ? 'light' : 'dark';
+});
+
+/* ── LANGUAGE PICKER ─────────────────────────────────────── */
+const translations = {
+  en: {
+    nav_about:'About', nav_work:'Work', nav_recognition:'Recognition', nav_connect:'Connect',
+    nav_cta:'Say hello →', hero_status:'Toronto · Open to opportunities',
+    hero_h1:'Hi, I\'m Carlos.<br>I build partnerships<br><em>that create value.</em>',
+    hero_sub:'13+ years in strategic sourcing — helping organisations reduce risk, unlock value, and build supplier relationships that last.',
+    btn_hello:'Say hello', btn_speak:'Invite me to speak',
+    about_label:'About', about_h:'Where strategy meets <em>partnership</em>',
+    about_p1:'Over 13 years, I\'ve worked at the intersection of commercial discipline and human relationships — from manufacturing floors in Belgium and Sweden to the boardrooms of Canada\'s largest institutions.',
+    about_p2:'I currently lead strategic sourcing at <strong>TD Bank</strong>, overseeing a $100M+ CAD spend portfolio in one of Canada\'s most regulated environments. Previously at <strong>Indigo</strong>, I built a vendor platform for 3,000+ suppliers and delivered $2.6M in savings within eight months.',
+    about_p3:'I speak at procurement summits, mentor professionals entering the Canadian market, and believe that lasting commercial outcomes are built on trust as much as terms.',
+    p1_name:'Risk &amp; Governance', p1_desc:'Third-party risk and compliance management in regulated financial environments.',
+    p2_name:'Supplier Partnerships', p2_desc:'Relationships that endure beyond the contract — built on accountability and shared value.',
+    p3_name:'Procurement Analytics', p3_desc:'Data-driven decisions that surface savings and opportunities others overlook.',
+    n1:'Annual spend managed', n2:'Savings in 8 months', n3:'Vendors onboarded', n4:'Global experience',
+    work_label:'Experience', work_h:'Career <em>highlights</em>',
+    w1_note:'Leading sourcing for professional services across a $100M+ CAD portfolio. Partnering with legal, risk, and business stakeholders to drive cost discipline, governance, and supplier accountability.',
+    w1_pill:'● Current', w2_role:'Sourcing Manager → Vendor Relations Lead',
+    w2_note:'Built a vendor onboarding platform for 3,000+ suppliers (90% faster processing), then stepped into strategic sourcing — delivering $2.6M in savings through negotiation, demand rationalisation, and process redesign.',
+    w3_role:'Global Sourcing &amp; Program Analyst',
+    w3_note:'Early career grounding in global sourcing across European manufacturing — €220K in savings at Husqvarna, and EMEA/APAC programme support at ArcelorMittal.',
+    human_label:'Beyond the resume', human_h:'Globally <em>minded</em>',
+    human_p1:'I grew up in the Dominican Republic, studied across Europe on an Erasmus scholarship, and have built my career across five countries. That global perspective shapes how I approach every negotiation and relationship.',
+    human_p2:'I mentor Latin professionals entering the Canadian market through <strong>Hispanotech Canada</strong>, and speak at procurement events because strategic sourcing — done well — deserves a bigger stage.',
+    tag1:'5 countries', tag2:'SIG Speaker ×3', tag3:'Erasmus Mundus', tag4:'Mentor',
+    rec_label:'Recognition &amp; Leadership', rec_h:'Speaking &amp; <em>giving back</em>',
+    r1_title:'SIG Global Executive Summit · 2022–2024', r1_desc:'Speaker at the premier global sourcing and procurement leadership forum for three consecutive years.',
+    r2_title:'Erasmus Mundus Ambassador', r2_desc:'High Merit Scholar at Politecnico di Milano. Dual MSc from Heriot-Watt University and Universidad de Alcalá.',
+    r3_title:'Mentor · Hispanotech Canada', r3_desc:'Guiding Latin professionals as they build meaningful careers in the Canadian business landscape.',
+    r4_title:'EduAction Gerdau · AIESEC Brazil', r4_desc:'Leadership facilitator committed to developing the next generation of globally minded professionals.',
+    cta_label:'Get in touch', cta_h:'Let\'s build something<br><em>meaningful together</em>',
+    cta_p:'Looking to hire a sourcing leader, book a speaker, or simply connect? I\'d love to hear from you.',
+    resume_btn:'Resume'
+  },
+  fr: {
+    nav_about:'À propos', nav_work:'Expérience', nav_recognition:'Distinctions', nav_connect:'Contact',
+    nav_cta:'Me contacter →', hero_status:'Toronto · Ouvert aux opportunités',
+    hero_h1:'Bonjour, je suis Carlos.<br>Je crée des partenariats<br><em>qui génèrent de la valeur.</em>',
+    hero_sub:'13+ ans en approvisionnement stratégique — aider les organisations à réduire les risques, libérer de la valeur et bâtir des relations durables avec les fournisseurs.',
+    btn_hello:'Me contacter', btn_speak:'M\'inviter à intervenir',
+    about_label:'À propos', about_h:'Là où la stratégie rencontre <em>le partenariat</em>',
+    about_p1:'En 13 ans, j\'ai évolué à l\'intersection de la rigueur commerciale et des relations humaines — des ateliers en Belgique et Suède aux salles de direction des plus grandes institutions canadiennes.',
+    about_p2:'Je dirige actuellement l\'approvisionnement stratégique chez <strong>TD Bank</strong>, avec un portefeuille de dépenses de plus de 100 M$ CAD. Chez <strong>Indigo</strong>, j\'ai créé une plateforme fournisseurs pour 3 000+ partenaires et réalisé 2,6 M$ d\'économies en huit mois.',
+    about_p3:'J\'interviens lors de sommets sur les achats, je conseille des professionnels qui s\'intègrent au marché canadien, et je crois que les meilleurs résultats commerciaux reposent autant sur la confiance que sur les conditions contractuelles.',
+    p1_name:'Risque &amp; Gouvernance', p1_desc:'Gestion des risques tiers et conformité dans des environnements financiers réglementés.',
+    p2_name:'Partenariats fournisseurs', p2_desc:'Des relations qui perdurent au-delà du contrat — fondées sur la responsabilité et la valeur partagée.',
+    p3_name:'Analytique achats', p3_desc:'Des décisions fondées sur les données qui révèlent les économies et opportunités ignorées.',
+    n1:'Dépenses gérées annuellement', n2:'Économies en 8 mois', n3:'Fournisseurs intégrés', n4:'Expérience mondiale',
+    work_label:'Expérience', work_h:'Parcours <em>professionnel</em>',
+    w1_note:'Direction de l\'approvisionnement en services professionnels pour un portefeuille de 100 M$ CAD+, en partenariat avec les équipes juridiques, risques et métiers.',
+    w1_pill:'● Poste actuel', w2_role:'Responsable Achats → Relations fournisseurs',
+    w2_note:'Conception d\'une plateforme d\'intégration pour 3 000+ fournisseurs (90% plus rapide), puis transition vers les achats stratégiques — 2,6 M$ d\'économies en moins d\'un an.',
+    w3_role:'Analyste Achats &amp; Programmes Mondiaux',
+    w3_note:'Fondements en approvisionnement mondial dans l\'industrie européenne — 220 K€ d\'économies chez Husqvarna, et soutien aux programmes EMEA/APAC chez ArcelorMittal.',
+    human_label:'Au-delà du CV', human_h:'Une vision <em>mondiale</em>',
+    human_p1:'J\'ai grandi en République dominicaine, étudié à travers l\'Europe grâce à une bourse Erasmus, et construit ma carrière dans cinq pays. Cette perspective globale guide chaque négociation et relation.',
+    human_p2:'Je suis mentor pour les professionnels latino-américains au Canada via <strong>Hispanotech Canada</strong>, et j\'interviens lors d\'événements sur les achats car ce domaine mérite une plus grande visibilité.',
+    tag1:'5 pays', tag2:'Orateur SIG ×3', tag3:'Erasmus Mundus', tag4:'Mentor',
+    rec_label:'Distinctions &amp; Leadership', rec_h:'Interventions &amp; <em>engagement</em>',
+    r1_title:'SIG Global Executive Summit · 2022–2024', r1_desc:'Intervenant au premier forum mondial de leadership en approvisionnement, trois années consécutives.',
+    r2_title:'Ambassadeur Erasmus Mundus', r2_desc:'Boursier Haute Distinction au Politecnico di Milano. Double Master de Heriot-Watt et de l\'Universidad de Alcalá.',
+    r3_title:'Mentor · Hispanotech Canada', r3_desc:'Accompagnement des professionnels latino-américains dans leur parcours au Canada.',
+    r4_title:'EduAction Gerdau · AIESEC Brésil', r4_desc:'Facilitateur en développement du leadership pour la prochaine génération de professionnels.',
+    cta_label:'Prendre contact', cta_h:'Construisons quelque chose<br><em>d\'important ensemble</em>',
+    cta_p:'Vous cherchez un responsable achats, un conférencier ou simplement à échanger ? Je serais ravi d\'en discuter.',
+    resume_btn:'CV'
+  },
+  pt: {
+    nav_about:'Sobre', nav_work:'Experiência', nav_recognition:'Reconhecimento', nav_connect:'Contato',
+    nav_cta:'Diga olá →', hero_status:'Toronto · Aberto a oportunidades',
+    hero_h1:'Olá, sou Carlos.<br>Construo parcerias<br><em>que geram valor.</em>',
+    hero_sub:'Mais de 13 anos em sourcing estratégico — ajudando organizações a reduzir riscos, gerar valor e construir relações duradouras com fornecedores.',
+    btn_hello:'Diga olá', btn_speak:'Convide-me para palestrar',
+    about_label:'Sobre', about_h:'Onde estratégia encontra <em>parceria</em>',
+    about_p1:'Ao longo de 13 anos, trabalhei na interseção entre rigor comercial e relações humanas — de fábricas na Bélgica e Suécia às salas de reunião das maiores instituições canadenses.',
+    about_p2:'Atualmente lidero o sourcing estratégico no <strong>TD Bank</strong>, gerindo um portfólio de mais de $100M CAD em um dos ambientes mais regulados do Canadá. Na <strong>Indigo</strong>, criei uma plataforma para 3.000+ fornecedores e entreguei $2,6M em economias em oito meses.',
+    about_p3:'Palestro em cúpulas de procurement, oriento profissionais que entram no mercado canadense e acredito que os melhores resultados comerciais são construídos com confiança tanto quanto com termos contratuais.',
+    p1_name:'Risco &amp; Governança', p1_desc:'Gestão de risco de terceiros e conformidade em ambientes financeiros regulamentados.',
+    p2_name:'Parcerias com Fornecedores', p2_desc:'Relações que perduram além do contrato — baseadas em responsabilidade e valor compartilhado.',
+    p3_name:'Análise de Procurement', p3_desc:'Decisões baseadas em dados que revelam economias e oportunidades que outros não percebem.',
+    n1:'Gasto anual gerido', n2:'Economias em 8 meses', n3:'Fornecedores integrados', n4:'Experiência global',
+    work_label:'Experiência', work_h:'Destaques da <em>carreira</em>',
+    w1_note:'Liderando sourcing para serviços profissionais em um portfólio de $100M+ CAD. Parceiro de equipes jurídicas, de risco e de negócios para garantir disciplina de custos e governança.',
+    w1_pill:'● Atual', w2_role:'Gerente de Sourcing → Líder de Relações com Fornecedores',
+    w2_note:'Criou uma plataforma de integração para 3.000+ fornecedores (90% mais rápido) e passou ao sourcing estratégico — entregando $2,6M em economias por meio de negociação e redesenho de processos.',
+    w3_role:'Analista de Sourcing &amp; Programas Globais',
+    w3_note:'Base sólida em sourcing global na indústria europeia — €220K em economias na Husqvarna e suporte a programas EMEA/APAC na ArcelorMittal.',
+    human_label:'Além do currículo', human_h:'Visão <em>global</em>',
+    human_p1:'Cresci na República Dominicana, estudei pela Europa com uma bolsa Erasmus e construí minha carreira em cinco países. Essa perspectiva global molda cada negociação e relação.',
+    human_p2:'Oriento profissionais latinos que entram no mercado canadense pela <strong>Hispanotech Canada</strong> e palestro em eventos de procurement porque essa área merece mais visibilidade.',
+    tag1:'5 países', tag2:'Palestrante SIG ×3', tag3:'Erasmus Mundus', tag4:'Mentor',
+    rec_label:'Reconhecimento &amp; Liderança', rec_h:'Palestras &amp; <em>contribuição</em>',
+    r1_title:'SIG Global Executive Summit · 2022–2024', r1_desc:'Palestrante no principal fórum de liderança em sourcing e procurement por três anos consecutivos.',
+    r2_title:'Embaixador Erasmus Mundus', r2_desc:'Alto Mérito no Politecnico di Milano. Duplo MSc pela Heriot-Watt University e Universidad de Alcalá.',
+    r3_title:'Mentor · Hispanotech Canada', r3_desc:'Orientando profissionais latinos na construção de carreiras significativas no Canadá.',
+    r4_title:'EduAction Gerdau · AIESEC Brasil', r4_desc:'Facilitador de desenvolvimento de liderança para a próxima geração de profissionais globais.',
+    cta_label:'Entre em contato', cta_h:'Vamos construir algo<br><em>significativo juntos</em>',
+    cta_p:'Quer contratar um líder de sourcing, convidar um palestrante ou simplesmente conversar? Adoraria ouvir de você.',
+    resume_btn:'Currículo'
+  },
+  es: {
+    nav_about:'Sobre mí', nav_work:'Experiencia', nav_recognition:'Reconocimientos', nav_connect:'Contacto',
+    nav_cta:'Hola →', hero_status:'Toronto · Abierto a oportunidades',
+    hero_h1:'Hola, soy Carlos.<br>Construyo alianzas<br><em>que generan valor.</em>',
+    hero_sub:'Más de 13 años en sourcing estratégico — ayudando a organizaciones a reducir riesgos, generar valor y construir relaciones duraderas con proveedores.',
+    btn_hello:'Saludar', btn_speak:'Invítame a hablar',
+    about_label:'Sobre mí', about_h:'Donde la estrategia encuentra <em>la alianza</em>',
+    about_p1:'Durante 13 años he trabajado en la intersección entre el rigor comercial y las relaciones humanas — desde plantas de fabricación en Bélgica y Suecia hasta las salas de juntas de las principales instituciones de Canadá.',
+    about_p2:'Actualmente lidero el sourcing estratégico en <strong>TD Bank</strong>, gestionando un portafolio de más de $100M CAD en uno de los entornos más regulados de Canadá. En <strong>Indigo</strong>, construí una plataforma para 3.000+ proveedores y logré $2,6M en ahorros en ocho meses.',
+    about_p3:'Participo como ponente en cumbres de procurement, asesoro a profesionales que ingresan al mercado canadiense y creo que los mejores resultados comerciales se construyen sobre la confianza tanto como sobre los términos.',
+    p1_name:'Riesgo &amp; Gobernanza', p1_desc:'Gestión de riesgo de terceros y cumplimiento normativo en entornos financieros regulados.',
+    p2_name:'Alianzas con Proveedores', p2_desc:'Relaciones que perduran más allá del contrato — basadas en responsabilidad y valor compartido.',
+    p3_name:'Analítica de Compras', p3_desc:'Decisiones basadas en datos que revelan ahorros y oportunidades que otros no ven.',
+    n1:'Gasto anual gestionado', n2:'Ahorros en 8 meses', n3:'Proveedores incorporados', n4:'Experiencia global',
+    work_label:'Experiencia', work_h:'Trayectoria <em>profesional</em>',
+    w1_note:'Liderando el sourcing de servicios profesionales en un portafolio de $100M+ CAD. Colaborando con equipos legales, de riesgo y de negocio para lograr disciplina de costos y gobernanza.',
+    w1_pill:'● Actual', w2_role:'Gerente de Sourcing → Líder de Relaciones con Proveedores',
+    w2_note:'Creé una plataforma de incorporación para 3.000+ proveedores (90% más rápido) y lideré el sourcing estratégico, logrando $2,6M en ahorros mediante negociación y rediseño de procesos.',
+    w3_role:'Analista de Sourcing &amp; Programas Globales',
+    w3_note:'Formación en sourcing global en la industria europea — €220K en ahorros en Husqvarna y soporte a programas EMEA/APAC en ArcelorMittal.',
+    human_label:'Más allá del currículum', human_h:'Visión <em>global</em>',
+    human_p1:'Crecí en República Dominicana, estudié en Europa con una beca Erasmus y he construido mi carrera en cinco países. Esa perspectiva global moldea cada negociación y relación.',
+    human_p2:'Asesoro a profesionales latinos que ingresan al mercado canadiense a través de <strong>Hispanotech Canada</strong> y participo en eventos de procurement porque el sourcing estratégico merece mayor visibilidad.',
+    tag1:'5 países', tag2:'Ponente SIG ×3', tag3:'Erasmus Mundus', tag4:'Mentor',
+    rec_label:'Reconocimientos &amp; Liderazgo', rec_h:'Ponencias &amp; <em>contribución</em>',
+    r1_title:'SIG Global Executive Summit · 2022–2024', r1_desc:'Ponente en el principal foro mundial de liderazgo en sourcing y procurement durante tres años consecutivos.',
+    r2_title:'Embajador Erasmus Mundus', r2_desc:'Beca de Alto Mérito en el Politecnico di Milano. Doble Máster por Heriot-Watt University y Universidad de Alcalá.',
+    r3_title:'Mentor · Hispanotech Canada', r3_desc:'Orientando a profesionales latinos en la construcción de carreras significativas en Canadá.',
+    r4_title:'EduAction Gerdau · AIESEC Brasil', r4_desc:'Facilitador de desarrollo de liderazgo para la próxima generación de profesionales globales.',
+    cta_label:'Ponte en contacto', cta_h:'Construyamos algo<br><em>significativo juntos</em>',
+    cta_p:'¿Buscas un líder de compras, un ponente o simplemente conectar? Estaré encantado de escucharte.',
+    resume_btn:'Currículum'
+  }
+};
+
+let currentLang = 'en';
+
+function applyLang(lang) {
+  const t = translations[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.dataset.i18n;
+    if (t[key] !== undefined) el.innerHTML = t[key];
+  });
+  document.getElementById('langLabel').textContent = lang.toUpperCase();
+  document.documentElement.lang = lang;
+  // mark active
+  document.querySelectorAll('.lang-option').forEach(o => {
+    o.classList.toggle('active', o.dataset.lang === lang);
+  });
+  currentLang = lang;
+}
+
+// Picker toggle
+const picker = document.getElementById('langPicker');
+document.getElementById('langBtn').addEventListener('click', e => {
+  e.stopPropagation();
+  picker.classList.toggle('open');
+});
+document.querySelectorAll('.lang-option').forEach(opt => {
+  opt.addEventListener('click', () => {
+    applyLang(opt.dataset.lang);
+    picker.classList.remove('open');
+  });
+});
+document.addEventListener('click', () => picker.classList.remove('open'));
 </script>
 </body>
 </html>
