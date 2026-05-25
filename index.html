@@ -65,15 +65,15 @@
     }
     .nav-cta:hover { opacity: 0.78; }
 
-    /* ── HERO — three-panel layout ───────────────── */
+    /* ── HERO — two-panel layout ─────────────────── */
     #hero {
       display: grid;
-      grid-template-columns: 1fr 420px 1fr;
+      grid-template-columns: 1fr 1fr;
       min-height: 100vh;
     }
     .hero-left {
       display: flex; flex-direction: column; justify-content: center;
-      padding: 8rem 3.5vw 5rem 6vw;
+      padding: 8rem 5vw 5rem 7vw;
       background: var(--white);
     }
     .hero-status {
@@ -123,40 +123,20 @@
     }
     .btn-ghost-lt:hover { border-color: rgba(255,255,255,0.6); color: #fff; transform: translateY(-1px); }
 
-    /* Centre panel — Carlos photo */
-    .hero-center {
-      position: relative; overflow: hidden;
-      background: var(--bg);
-    }
-    .hero-center img {
-      width: 100%; height: 100%;
-      object-fit: cover; object-position: center top;
-      display: block;
-    }
-    /* Subtle gradient at top & bottom to blend */
-    .hero-center::after {
-      content: '';
-      position: absolute; inset: 0;
-      background:
-        linear-gradient(to bottom, rgba(255,255,255,0.25) 0%, transparent 15%, transparent 80%, rgba(255,255,255,0.15) 100%);
-      pointer-events: none;
-    }
-
     /* Right panel — Toronto skyline */
     .hero-right {
       position: relative; overflow: hidden;
     }
     .hero-right img {
       width: 100%; height: 100%;
-      object-fit: cover; object-position: center 55%;
+      object-fit: cover; object-position: center 50%;
       display: block;
-      filter: brightness(1.05) saturate(0.85);
+      filter: brightness(1.05) saturate(0.8);
     }
-    /* Fade left edge to blend with photo panel */
     .hero-right::before {
       content: '';
       position: absolute; inset: 0;
-      background: linear-gradient(to right, rgba(248,247,245,0.5) 0%, transparent 35%);
+      background: linear-gradient(to right, rgba(255,255,255,0.35) 0%, transparent 30%);
       z-index: 1;
     }
 
@@ -360,14 +340,8 @@
     .float-resume svg { width: 11px; height: 11px; fill: currentColor; }
 
     /* ── RESPONSIVE ───────────────────────────────── */
-    @media (max-width: 960px) {
-      #hero { grid-template-columns: 1fr 340px; }
-      .hero-right { display: none; }
-      .hero-left { padding: 7rem 4vw 4rem 5vw; }
-    }
-    @media (max-width: 720px) {
+    @media (max-width: 820px) {
       #hero { grid-template-columns: 1fr; min-height: auto; }
-      .hero-center { display: none; }
       .hero-right { display: none; }
       .hero-left { padding: 7rem 5vw 4rem; }
       .intro-grid, .human-grid { grid-template-columns: 1fr; gap: 2rem; }
@@ -415,19 +389,10 @@
       <a href="https://www.linkedin.com/in/cdilone/" target="_blank" rel="noopener" class="btn btn-line">LinkedIn</a>
     </div>
   </div>
-  <!-- Carlos photo — centre panel -->
-  <div class="hero-center">
-    <img
-      src="carlos.jpeg"
-      alt="Carlos Dilone"
-      loading="eager"
-    />
-  </div>
-
-  <!-- Toronto skyline — right panel -->
+  <!-- Toronto skyline -->
   <div class="hero-right">
     <img
-      src="https://images.unsplash.com/photo-1517090186835-e348b621c820?w=1200&q=85&auto=format&fit=crop"
+      src="https://images.unsplash.com/photo-1517090186835-e348b621c820?w=1400&q=90&auto=format&fit=crop"
       alt="Toronto skyline"
       loading="eager"
     />
@@ -577,7 +542,7 @@
     <div class="human-grid">
       <div class="reveal">
         <img
-          src="carlos.jpeg"
+          src="carlos.jpg"
           alt="Carlos Dilone"
           class="human-img"
           loading="lazy"
