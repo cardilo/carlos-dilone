@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carlos Dilone — Strategic Sourcing Leader</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink:    #111111;
+      --mid:    #505050;
+      --muted:  #909090;
+      --line:   #E6E6E6;
+      --bg:     #F8F7F5;
+      --warm:   #F3EFE7;
+      --white:  #FFFFFF;
+      --amber:  #B8813A;
+      --ease:   cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Bricolage Grotesque', system-ui, sans-serif;
+      background: var(--white);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+
+    /* ── Reveal ───────────────────────────────────── */
+    .reveal {
+      opacity: 0; transform: translateY(14px);
+      transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+    }
+    .reveal.on { opacity: 1; transform: none; }
+    .d1 { transition-delay: 0.09s; }
+    .d2 { transition-delay: 0.18s; }
+    .d3 { transition-delay: 0.27s; }
+
+    /* ── NAV ──────────────────────────────────────── */
+    nav {
+      position: fixed; inset: 0 0 auto 0; z-index: 99;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 5vw;
+      transition: background 0.3s, border-color 0.3s;
+      border-bottom: 1px solid transparent;
+    }
+    nav.scrolled {
+      background: rgba(255,255,255,0.94);
+      backdrop-filter: blur(16px);
+      border-color: var(--line);
+    }
+    .nav-name { font-size: 0.9rem; font-weight: 600; letter-spacing: -0.01em; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 0.77rem; font-weight: 400; color: var(--mid); transition: color 0.2s; }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-cta {
+      font-size: 0.77rem; font-weight: 500;
+      background: var(--ink); color: #fff;
+      padding: 0.48rem 1rem; border-radius: 6px;
+      transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.78; }
+
+    /* ── HERO — three-panel layout ───────────────── */
+    #hero {
+      display: grid;
+      grid-template-columns: 1fr 420px 1fr;
+      min-height: 100vh;
+    }
+    .hero-left {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 8rem 3.5vw 5rem 6vw;
+      background: var(--white);
+    }
+    .hero-status {
+      display: inline-flex; align-items: center; gap: 0.45rem;
+      font-size: 0.7rem; font-weight: 500; letter-spacing: 0.09em;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 2rem;
+      animation: rise 0.8s var(--ease) 0.1s both;
+    }
+    .hero-dot { width: 5px; height: 5px; background: #4ADE80; border-radius: 50%; flex-shrink: 0; }
+    .hero-h1 {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: clamp(2.6rem, 4vw, 4rem);
+      font-weight: 400; line-height: 1.1;
+      letter-spacing: -0.025em; color: var(--ink);
+      margin-bottom: 1.25rem;
+      animation: rise 0.8s var(--ease) 0.2s both;
+    }
+    .hero-h1 em { font-style: italic; color: var(--muted); }
+    .hero-sub {
+      font-size: 0.97rem; font-weight: 300; line-height: 1.8;
+      color: var(--mid); max-width: 42ch;
+      margin-bottom: 2.25rem;
+      animation: rise 0.8s var(--ease) 0.3s both;
+    }
+    .hero-actions {
+      display: flex; gap: 0.6rem; flex-wrap: wrap;
+      animation: rise 0.8s var(--ease) 0.4s both;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      padding: 0.68rem 1.2rem; border-radius: 7px;
+      font-family: inherit; font-size: 0.8rem; font-weight: 500;
+      cursor: pointer; border: none;
+      transition: all 0.2s var(--ease);
+    }
+    .btn svg { width: 13px; height: 13px; fill: currentColor; flex-shrink: 0; }
+    .btn-dark  { background: var(--ink); color: #fff; }
+    .btn-dark:hover { background: #2c2c2c; transform: translateY(-1px); }
+    .btn-line  { background: transparent; color: var(--mid); border: 1px solid var(--line); }
+    .btn-line:hover { border-color: #bbb; color: var(--ink); transform: translateY(-1px); }
+    .btn-cream { background: var(--warm); color: var(--ink); }
+    .btn-cream:hover { background: #EBE4D8; transform: translateY(-1px); }
+    .btn-ghost-lt {
+      background: transparent; color: rgba(255,255,255,0.75);
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+    .btn-ghost-lt:hover { border-color: rgba(255,255,255,0.6); color: #fff; transform: translateY(-1px); }
+
+    /* Centre panel — Carlos photo */
+    .hero-center {
+      position: relative; overflow: hidden;
+      background: var(--bg);
+    }
+    .hero-center img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+      display: block;
+    }
+    /* Subtle gradient at top & bottom to blend */
+    .hero-center::after {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,0.25) 0%, transparent 15%, transparent 80%, rgba(255,255,255,0.15) 100%);
+      pointer-events: none;
+    }
+
+    /* Right panel — Toronto skyline */
+    .hero-right {
+      position: relative; overflow: hidden;
+    }
+    .hero-right img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center 55%;
+      display: block;
+      filter: brightness(1.05) saturate(0.85);
+    }
+    /* Fade left edge to blend with photo panel */
+    .hero-right::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, rgba(248,247,245,0.5) 0%, transparent 35%);
+      z-index: 1;
+    }
+
+    @keyframes rise { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
+
+    /* ── SHARED LAYOUT ────────────────────────────── */
+    .wrap { max-width: 860px; margin: 0 auto; padding: 0 5vw; }
+    .label {
+      font-size: 0.68rem; font-weight: 600; letter-spacing: 0.13em;
+      text-transform: uppercase; color: var(--amber); margin-bottom: 0.55rem;
+    }
+    .sh {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(1.65rem, 2.8vw, 2.2rem);
+      font-weight: 400; line-height: 1.2; letter-spacing: -0.015em; color: var(--ink);
+    }
+    .sh em { font-style: italic; color: var(--muted); }
+
+    /* ── INTRO ────────────────────────────────────── */
+    #intro { padding: 5rem 0; border-top: 1px solid var(--line); }
+    .intro-grid {
+      display: grid; grid-template-columns: 1fr 1.55fr;
+      gap: 5rem; align-items: start;
+    }
+    .intro-right p {
+      font-size: 0.95rem; font-weight: 300; line-height: 1.9;
+      color: var(--mid); margin-bottom: 0.9rem;
+    }
+    .intro-right p:last-child { margin-bottom: 0; }
+    .intro-right strong { font-weight: 600; color: var(--ink); }
+
+    /* ── PILLARS ──────────────────────────────────── */
+    #pillars { padding: 0 0 5rem; }
+    .pillars-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1px; background: var(--line);
+      border: 1px solid var(--line); border-radius: 10px; overflow: hidden;
+      margin-top: 0;
+    }
+    .pillar {
+      background: var(--white); padding: 1.75rem 1.5rem;
+      transition: background 0.2s;
+    }
+    .pillar:hover { background: var(--bg); }
+    .pillar-icon {
+      width: 2.2rem; height: 2.2rem; margin-bottom: 1rem;
+      color: var(--ink);
+    }
+    .pillar-icon svg { width: 100%; height: 100%; }
+    .pillar-name { font-size: 0.88rem; font-weight: 600; color: var(--ink); margin-bottom: 0.35rem; }
+    .pillar-desc { font-size: 0.78rem; font-weight: 300; color: var(--muted); line-height: 1.65; }
+
+    /* ── NUMBERS ──────────────────────────────────── */
+    #numbers {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 3.5rem 0;
+      background: var(--warm);
+    }
+    .numbers-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 2rem; }
+    .num-item { text-align: center; }
+    .num-val {
+      font-family: 'Instrument Serif', serif;
+      font-size: 2.2rem; font-weight: 400; line-height: 1;
+      color: var(--ink); letter-spacing: -0.02em;
+    }
+    .num-lbl {
+      font-size: 0.7rem; font-weight: 400; letter-spacing: 0.07em;
+      text-transform: uppercase; color: var(--muted); margin-top: 0.4rem;
+    }
+
+    /* ── WORK ─────────────────────────────────────── */
+    #work { padding: 5rem 0; }
+    .section-hdr { margin-bottom: 2.25rem; }
+    .work-list { display: flex; flex-direction: column; }
+    .work-item {
+      display: grid; grid-template-columns: 170px 1fr;
+      gap: 2rem; padding: 1.75rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .work-item:first-child { border-top: 1px solid var(--line); }
+    .work-period { font-size: 0.71rem; font-weight: 400; color: var(--muted); margin-bottom: 0.2rem; }
+    .work-co { font-size: 0.86rem; font-weight: 600; color: var(--ink); }
+    .work-city { font-size: 0.71rem; font-weight: 300; color: var(--muted); }
+    .work-role {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.05rem; font-weight: 400; color: var(--ink); margin-bottom: 0.55rem;
+    }
+    .work-note { font-size: 0.83rem; font-weight: 300; color: var(--mid); line-height: 1.8; }
+    .work-pill {
+      display: inline-block; margin-top: 0.7rem;
+      padding: 0.2rem 0.65rem; border-radius: 20px;
+      font-size: 0.67rem; font-weight: 500;
+      border: 1px solid var(--line); color: var(--muted);
+    }
+    .work-pill.live { background: #F0FDF4; border-color: #BBF7D0; color: #15803D; }
+
+    /* ── HUMAN ────────────────────────────────────── */
+    #human { padding: 5rem 0; background: var(--bg); border-top: 1px solid var(--line); }
+    .human-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; align-items: center;
+    }
+    .human-img { width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 10px; display: block; }
+    .human-right .sh { margin-bottom: 1.1rem; }
+    .human-right p {
+      font-size: 0.92rem; font-weight: 300; line-height: 1.85;
+      color: var(--mid); margin-bottom: 0.85rem;
+    }
+    .human-right p:last-of-type { margin-bottom: 1.5rem; }
+    .human-right strong { font-weight: 600; color: var(--ink); }
+    .tags-row { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag {
+      display: inline-flex; align-items: center; gap: 0.35rem;
+      padding: 0.32rem 0.75rem; border-radius: 20px;
+      font-size: 0.72rem; font-weight: 400;
+      border: 1px solid var(--line); color: var(--mid);
+    }
+    .tag svg { width: 11px; height: 11px; fill: var(--muted); }
+
+    /* ── RECOGNITION ──────────────────────────────── */
+    #recognition { padding: 5rem 0; }
+    .rec-grid {
+      display: grid; grid-template-columns: repeat(2,1fr);
+      gap: 1px; background: var(--line);
+      border: 1px solid var(--line); border-radius: 10px; overflow: hidden;
+      margin-top: 2.25rem;
+    }
+    .rec-card {
+      background: var(--white); padding: 1.75rem;
+      display: flex; gap: 1rem; align-items: flex-start;
+      transition: background 0.2s;
+    }
+    .rec-card:hover { background: var(--bg); }
+    .rec-icon {
+      width: 2.25rem; height: 2.25rem; flex-shrink: 0;
+      background: var(--bg); border: 1px solid var(--line);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      color: var(--mid);
+    }
+    .rec-icon svg { width: 15px; height: 15px; fill: currentColor; }
+    .rec-title { font-size: 0.86rem; font-weight: 600; color: var(--ink); margin-bottom: 0.3rem; }
+    .rec-desc  { font-size: 0.77rem; font-weight: 300; color: var(--muted); line-height: 1.65; }
+
+    /* ── CTA ──────────────────────────────────────── */
+    #cta {
+      padding: 6rem 0;
+      background: var(--ink); text-align: center;
+      position: relative; overflow: hidden;
+    }
+    /* Subtle grid texture */
+    #cta::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .cta-inner { position: relative; z-index: 2; max-width: 580px; margin: 0 auto; padding: 0 5vw; }
+    .cta-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.13em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 1rem; }
+    .cta-h {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(1.9rem, 4vw, 2.8rem);
+      font-weight: 400; line-height: 1.15; letter-spacing: -0.02em;
+      color: #fff; margin-bottom: 1rem;
+    }
+    .cta-h em { font-style: italic; color: rgba(255,255,255,0.4); }
+    .cta-p {
+      font-size: 0.9rem; font-weight: 300; line-height: 1.8;
+      color: rgba(255,255,255,0.4); margin-bottom: 2.25rem;
+    }
+    .cta-btns { display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; }
+
+    /* ── FOOTER ───────────────────────────────────── */
+    footer {
+      padding: 1.5rem 5vw; background: #0C0C0C;
+      border-top: 1px solid #1E1E1E;
+      display: flex; flex-wrap: wrap; gap: 1rem;
+      align-items: center; justify-content: space-between;
+    }
+    .foot-l { font-size: 0.73rem; color: rgba(255,255,255,0.22); }
+    .foot-links { display: flex; gap: 1.5rem; list-style: none; }
+    .foot-links a { font-size: 0.71rem; color: rgba(255,255,255,0.22); transition: color 0.2s; }
+    .foot-links a:hover { color: rgba(255,255,255,0.55); }
+
+    /* ── FLOAT ────────────────────────────────────── */
+    .float-resume {
+      position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 88;
+      background: var(--white); color: var(--ink);
+      border: 1px solid var(--line);
+      padding: 0.52rem 0.95rem; border-radius: 30px;
+      font-family: inherit; font-size: 0.71rem; font-weight: 500;
+      display: flex; align-items: center; gap: 0.38rem;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.08);
+      opacity: 0; transform: translateY(6px);
+      transition: all 0.3s var(--ease);
+    }
+    .float-resume.on { opacity: 1; transform: none; }
+    .float-resume:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.13); transform: translateY(-1px); }
+    .float-resume svg { width: 11px; height: 11px; fill: currentColor; }
+
+    /* ── RESPONSIVE ───────────────────────────────── */
+    @media (max-width: 960px) {
+      #hero { grid-template-columns: 1fr 340px; }
+      .hero-right { display: none; }
+      .hero-left { padding: 7rem 4vw 4rem 5vw; }
+    }
+    @media (max-width: 720px) {
+      #hero { grid-template-columns: 1fr; min-height: auto; }
+      .hero-center { display: none; }
+      .hero-right { display: none; }
+      .hero-left { padding: 7rem 5vw 4rem; }
+      .intro-grid, .human-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .human-img { aspect-ratio: 16/9; }
+      .pillars-grid { grid-template-columns: 1fr; }
+      .numbers-grid { grid-template-columns: 1fr 1fr; }
+      .work-item { grid-template-columns: 1fr; gap: 0.25rem; }
+      .rec-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAV ─────────────────────────────────────────────── -->
+<nav id="nav">
+  <span class="nav-name">Carlos Dilone</span>
+  <ul class="nav-links">
+    <li><a href="#intro">About</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#recognition">Recognition</a></li>
+    <li><a href="#cta">Connect</a></li>
+  </ul>
+  <a href="mailto:ing.dilone@gmail.com" class="nav-cta">Say hello →</a>
+</nav>
+
+<!-- ─── HERO ─────────────────────────────────────────────── -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-status">
+      <span class="hero-dot"></span>
+      Based in Toronto · Open to opportunities
+    </div>
+    <h1 class="hero-h1">
+      Hi, I'm Carlos.<br>
+      I build partnerships<br><em>that create value.</em>
+    </h1>
+    <p class="hero-sub">Strategic sourcing and vendor management leader with 13+ years helping organisations navigate complexity, reduce risk, and build supplier relationships that endure.</p>
+    <div class="hero-actions">
+      <a href="mailto:ing.dilone@gmail.com" class="btn btn-dark">
+        <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        Say hello
+      </a>
+      <a href="mailto:ing.dilone@gmail.com?subject=Speaking%20Invitation" class="btn btn-line">Invite me to speak</a>
+      <a href="https://www.linkedin.com/in/cdilone/" target="_blank" rel="noopener" class="btn btn-line">LinkedIn</a>
+    </div>
+  </div>
+  <!-- Carlos photo — centre panel -->
+  <div class="hero-center">
+    <img
+      src="carlos.jpeg"
+      alt="Carlos Dilone"
+      loading="eager"
+    />
+  </div>
+
+  <!-- Toronto skyline — right panel -->
+  <div class="hero-right">
+    <img
+      src="https://images.unsplash.com/photo-1517090186835-e348b621c820?w=1200&q=85&auto=format&fit=crop"
+      alt="Toronto skyline"
+      loading="eager"
+    />
+  </div>
+</section>
+
+<!-- ─── INTRO ─────────────────────────────────────────────── -->
+<section id="intro">
+  <div class="wrap">
+    <div class="intro-grid">
+      <div class="reveal">
+        <div class="label">About</div>
+        <h2 class="sh">Where strategy<br>meets <em>partnership</em></h2>
+      </div>
+      <div class="reveal d1">
+        <p>I've spent 13+ years at the intersection of commercial rigour and human relationships — from manufacturing floors in Belgium and Sweden to the boardrooms of Canada's largest institutions.</p>
+        <p>Today I lead strategic sourcing at <strong>TD Bank</strong>, managing a $100M+ CAD annual spend portfolio in one of the country's most regulated environments. Previously at <strong>Indigo</strong>, I built a vendor platform that served 3,000+ suppliers and delivered $2.6M in savings within eight months.</p>
+        <p>I speak at procurement summits, mentor professionals entering the Canadian market, and believe that the best commercial outcomes are built on trust as much as terms.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PILLARS ───────────────────────────────────────────── -->
+<section id="pillars">
+  <div class="wrap">
+    <div class="pillars-grid">
+
+      <div class="pillar reveal">
+        <div class="pillar-icon">
+          <!-- Shield / Governance -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L3 7v5c0 5 4 9.3 9 10.3C17 21.3 21 17 21 12V7L12 2z"/>
+            <path d="M9 12l2 2 4-4"/>
+          </svg>
+        </div>
+        <div class="pillar-name">Risk &amp; Governance</div>
+        <div class="pillar-desc">Third-party risk management and compliance in regulated financial environments.</div>
+      </div>
+
+      <div class="pillar reveal d1">
+        <div class="pillar-icon">
+          <!-- Network / Partnership -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="7" r="2"/><circle cx="15" cy="17" r="2"/><circle cx="19" cy="7" r="2"/>
+            <path d="M11 7h6M10.5 8.5L13.5 16"/><path d="M5 12c0-3 2-5 4-5"/>
+          </svg>
+        </div>
+        <div class="pillar-name">Supplier Partnerships</div>
+        <div class="pillar-desc">Building relationships that perform beyond the contract, grounded in accountability and mutual value.</div>
+      </div>
+
+      <div class="pillar reveal d2">
+        <div class="pillar-icon">
+          <!-- Analytics / Chart -->
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 20h18M5 20V14M9 20V8M13 20V11M17 20V4"/>
+          </svg>
+        </div>
+        <div class="pillar-name">Procurement Analytics</div>
+        <div class="pillar-desc">Data-led sourcing decisions that surface savings and governance opportunities others miss.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── NUMBERS ───────────────────────────────────────────── -->
+<section id="numbers">
+  <div class="wrap">
+    <div class="numbers-grid">
+      <div class="num-item reveal">
+        <div class="num-val">$100M+</div>
+        <div class="num-lbl">Annual spend managed</div>
+      </div>
+      <div class="num-item reveal d1">
+        <div class="num-val">$2.6M</div>
+        <div class="num-lbl">Savings in 8 months</div>
+      </div>
+      <div class="num-item reveal d2">
+        <div class="num-val">3,000+</div>
+        <div class="num-lbl">Vendors onboarded</div>
+      </div>
+      <div class="num-item reveal d3">
+        <div class="num-val">13 yrs</div>
+        <div class="num-lbl">Global experience</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── WORK ──────────────────────────────────────────────── -->
+<section id="work">
+  <div class="wrap">
+    <div class="section-hdr">
+      <div class="label reveal">Experience</div>
+      <h2 class="sh reveal d1">Career <em>highlights</em></h2>
+    </div>
+    <div class="work-list">
+
+      <div class="work-item reveal">
+        <div>
+          <div class="work-period">2025 — Present</div>
+          <div class="work-co">TD Bank</div>
+          <div class="work-city">Toronto, ON</div>
+        </div>
+        <div>
+          <div class="work-role">Strategic Sourcing Manager</div>
+          <div class="work-note">Leading strategic sourcing for professional services across a $100M+ CAD portfolio in a highly regulated environment. Partnering with legal, risk, and business teams to deliver cost discipline, governance, and vendor accountability at scale.</div>
+          <span class="work-pill live">● Current</span>
+        </div>
+      </div>
+
+      <div class="work-item reveal">
+        <div>
+          <div class="work-period">2021 — 2025</div>
+          <div class="work-co">Indigo Books &amp; Music</div>
+          <div class="work-city">Toronto, ON</div>
+        </div>
+        <div>
+          <div class="work-role">Strategic Sourcing Manager &amp; Vendor Relations Lead</div>
+          <div class="work-note">Progressed from building a self-serve onboarding platform for 3,000+ vendors (reducing onboarding time by 90%) to leading strategic sourcing — delivering $2.6M in savings in under a year through negotiations, demand rationalisation, and process redesign.</div>
+          <span class="work-pill">$2.6M saved · 3,000+ vendors</span>
+        </div>
+      </div>
+
+      <div class="work-item reveal">
+        <div>
+          <div class="work-period">2012 — 2014</div>
+          <div class="work-co">Husqvarna AB · ArcelorMittal</div>
+          <div class="work-city">Stockholm · Gent</div>
+        </div>
+        <div>
+          <div class="work-role">Global Sourcing &amp; Program Analyst</div>
+          <div class="work-note">Foundational years in global sourcing across European manufacturing — delivering €220K in savings at Husqvarna through price variation analysis, and supporting EMEA/APAC production programmes at ArcelorMittal.</div>
+          <span class="work-pill">Europe · €220K savings</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── HUMAN ──────────────────────────────────────────────── -->
+<section id="human">
+  <div class="wrap">
+    <div class="human-grid">
+      <div class="reveal">
+        <img
+          src="carlos.jpeg"
+          alt="Carlos Dilone"
+          class="human-img"
+          loading="lazy"
+        />
+      </div>
+      <div class="human-right reveal d1">
+        <div class="label">Beyond the resume</div>
+        <h2 class="sh">Globally <em>minded</em></h2>
+        <p>I grew up in the Dominican Republic, studied across Europe on an Erasmus scholarship, and have built a career across five countries. That international perspective shapes how I approach every negotiation, relationship, and challenge.</p>
+        <p>I mentor Latin professionals entering the Canadian market through <strong>Hispanotech Canada</strong>, and I speak at procurement events because good sourcing — done right — deserves broader recognition.</p>
+        <div class="tags-row">
+
+          <span class="tag">
+            <!-- Globe icon -->
+            <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zm0 2c.9 0 2 .8 2.9 2.7H9.1C10 6.8 11.1 4 12 4zm-3.8 4.7h7.6c.3.9.5 1.9.6 3H8.6c0-1.1.3-2.1.6-3zM2 12c0-.3 0-.7.1-1h3.5c0 .7.1 1.4.2 2H2.3c-.2-.6-.3-1.3-.3-1zm10 8c-.9 0-2-.8-2.9-2.7h5.8C13.9 19.2 12.9 20 12 20zm-3.6-4.7c-.3-.9-.5-1.9-.6-3h8.4c-.1 1.1-.3 2.1-.6 3H8.4zm9 2.4c.5-1 .8-2.1.9-3.4H21.9a8 8 0 0 1-4.5 3.4zm1-5.4c.1-.6.2-1.3.2-2H22c0 .3.1.7.1 1v.3l-.1.7h-2.7zM5.6 8.7A8 8 0 0 1 10 5.3c-.5 1-.9 2.1-1 3.4H5.6zm-.2 5.3H2.1A8 8 0 0 1 5.7 10h3.2c-.1.6-.2 1.3-.2 2v1.3z"/></svg>
+            5 countries
+          </span>
+
+          <span class="tag">
+            <!-- Mic icon -->
+            <svg viewBox="0 0 24 24"><path d="M12 1a4 4 0 0 0-4 4v6a4 4 0 0 0 8 0V5a4 4 0 0 0-4-4zm6 10a6 6 0 0 1-12 0H4a8 8 0 0 0 7 7.93V22h2v-3.07A8 8 0 0 0 20 11h-2z"/></svg>
+            SIG Speaker ×3
+          </span>
+
+          <span class="tag">
+            <!-- Graduation cap icon -->
+            <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zm0 12.5L4.5 11l-.5.27V17c0 1.1 3.58 3 8 3s8-1.9 8-3v-5.73l-.5-.27L12 15.5z"/></svg>
+            Erasmus Mundus
+          </span>
+
+          <span class="tag">
+            <!-- People icon -->
+            <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+            Mentor
+          </span>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── RECOGNITION ───────────────────────────────────────── -->
+<section id="recognition">
+  <div class="wrap">
+    <div class="label reveal">Recognition &amp; Leadership</div>
+    <h2 class="sh reveal d1">Speaking &amp; <em>giving back</em></h2>
+    <div class="rec-grid">
+
+      <div class="rec-card reveal">
+        <div class="rec-icon">
+          <!-- Microphone -->
+          <svg viewBox="0 0 24 24"><path d="M12 1a4 4 0 0 0-4 4v6a4 4 0 0 0 8 0V5a4 4 0 0 0-4-4zm6 10a6 6 0 0 1-12 0H4a8 8 0 0 0 7 7.93V22h2v-3.07A8 8 0 0 0 20 11h-2z"/></svg>
+        </div>
+        <div>
+          <div class="rec-title">SIG Global Executive Summit · 2022–2024</div>
+          <div class="rec-desc">Featured speaker at the premier sourcing and procurement leadership forum for three consecutive years.</div>
+        </div>
+      </div>
+
+      <div class="rec-card reveal d1">
+        <div class="rec-icon">
+          <!-- Star / Award -->
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <div>
+          <div class="rec-title">Erasmus Mundus Ambassador</div>
+          <div class="rec-desc">High Merit Scholar at Politecnico di Milano. Dual MSc across Heriot-Watt University and Universidad de Alcalá.</div>
+        </div>
+      </div>
+
+      <div class="rec-card reveal d2">
+        <div class="rec-icon">
+          <!-- People / Mentor -->
+          <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+        </div>
+        <div>
+          <div class="rec-title">Mentor · Hispanotech Canada</div>
+          <div class="rec-desc">Supporting Latin professionals in building meaningful careers in the Canadian business landscape.</div>
+        </div>
+      </div>
+
+      <div class="rec-card reveal d3">
+        <div class="rec-icon">
+          <!-- Leaf / Growth -->
+          <svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 3-11 8 0 0-2-5 4-7 0 0-3 1-4 6 0 0 5-4 9-1 0 0-3-6-11-1z"/></svg>
+        </div>
+        <div>
+          <div class="rec-title">EduAction Gerdau · AIESEC Brazil</div>
+          <div class="rec-desc">Leadership development facilitator — investing in the next generation of globally minded professionals.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA ───────────────────────────────────────────────── -->
+<section id="cta">
+  <div class="cta-inner reveal">
+    <div class="cta-label">Get in touch</div>
+    <h2 class="cta-h">Let's build something<br><em>meaningful together</em></h2>
+    <p class="cta-p">Whether you're looking for a sourcing leader, a speaker for your next event, or simply want to connect — I'd genuinely love to hear from you.</p>
+    <div class="cta-btns">
+      <a href="mailto:ing.dilone@gmail.com" class="btn btn-cream">
+        <svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        Say hello
+      </a>
+      <a href="mailto:ing.dilone@gmail.com?subject=Speaking%20Invitation%20—%20[Event]" class="btn btn-ghost-lt">Invite me to speak</a>
+      <a href="https://www.linkedin.com/in/cdilone/" target="_blank" rel="noopener" class="btn btn-ghost-lt">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ────────────────────────────────────────────── -->
+<footer>
+  <span class="foot-l">© 2026 Carlos Dilone · Toronto, Canada</span>
+  <ul class="foot-links">
+    <li><a href="#intro">About</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#recognition">Recognition</a></li>
+    <li><a href="#cta">Connect</a></li>
+  </ul>
+</footer>
+
+<!-- ─── FLOAT RESUME ──────────────────────────────────────── -->
+<a href="/Users/carlosdilone/Downloads/Resume Carlos 2026_Financial Services.pdf" download class="float-resume" id="fr">
+  <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+  Resume
+</a>
+
+<script>
+  const nav = document.getElementById('nav');
+  const fr  = document.getElementById('fr');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 55);
+    fr.classList.toggle('on', window.scrollY > 380);
+  }, { passive: true });
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -20px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
