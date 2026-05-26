@@ -231,7 +231,7 @@
     /* ── HUMAN ────────────────────────────────────── */
     #human { padding:5rem 0; background:var(--bg); border-top:1px solid var(--line); }
     .human-grid { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; }
-    .human-img { width:100%; aspect-ratio:4/5; object-fit:cover; border-radius:10px; display:block; }
+    .human-img { width:100%; aspect-ratio:4/5; object-fit:cover; object-position:center top; border-radius:10px; display:block; }
     .human-right .sh { margin-bottom:1rem; }
     .human-right p { font-size:0.91rem; font-weight:300; line-height:1.85; color:var(--mid); margin-bottom:0.8rem; }
     .human-right p:last-of-type { margin-bottom:1.5rem; }
@@ -311,7 +311,7 @@
       /* Layout stacks */
       .intro-grid { grid-template-columns:1fr; gap:1.75rem; }
       .human-grid { grid-template-columns:1fr; gap:2rem; }
-      .human-img { aspect-ratio:4/3; }
+      .human-img { aspect-ratio:3/4; object-position:center 15%; }
       .pillars-grid { grid-template-columns:1fr; }
       .numbers-grid { grid-template-columns:1fr 1fr; gap:1.25rem; }
       .work-item { grid-template-columns:1fr; gap:0.3rem; }
