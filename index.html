@@ -282,6 +282,21 @@
     .float-resume:hover { box-shadow:0 4px 20px rgba(0,0,0,0.13); transform:translateY(-1px); }
     .float-resume svg { width:11px; height:11px; fill:currentColor; }
 
+    /* ── COMPANY LOGOS ───────────────────────────── */
+    .work-logo-wrap { display:flex; align-items:center; gap:0.5rem; margin-bottom:0.35rem; }
+    .work-logo { width:28px; height:28px; object-fit:contain; border-radius:5px; border:1px solid var(--line); background:var(--white); padding:2px; flex-shrink:0; }
+    .rec-logo { width:36px; height:36px; object-fit:contain; border-radius:8px; border:1px solid var(--line); background:var(--white); padding:3px; flex-shrink:0; }
+    [data-theme="dark"] .work-logo, [data-theme="dark"] .rec-logo { background:#fff; }
+
+    /* ── LANGUAGE BADGES ─────────────────────────── */
+    .lang-badges { display:flex; flex-wrap:wrap; gap:0.4rem; margin-top:1rem; }
+    .lang-badge { display:inline-flex; align-items:center; gap:0.3rem; padding:0.28rem 0.65rem; border-radius:20px; font-size:0.7rem; font-weight:500; background:var(--warm); color:var(--mid); border:1px solid var(--line); letter-spacing:0.02em; }
+    .lang-badge .flag { font-size:0.85rem; }
+
+    /* ── ABOUT PARAGRAPH SPACING ─────────────────── */
+    .intro-right p { font-size:0.94rem; font-weight:300; line-height:1.95; color:var(--mid); margin-bottom:1.4rem; }
+    .intro-right p:last-child { margin-bottom:0; }
+
     /* ── RESPONSIVE ───────────────────────────────── */
     @media (max-width:820px) {
       .hero-left { padding:7rem 5vw 4rem; }
@@ -342,8 +357,8 @@
       <span class="hero-dot"></span>
       <span data-i18n="hero_status">Toronto · Open to opportunities</span>
     </div>
-    <h1 class="hero-h1" data-i18n="hero_h1">Hi, I'm Carlos.<br>I optimize enterprise spend<br><em>and engineer high-value supplier partnerships.</em></h1>
-    <p class="hero-sub" data-i18n="hero_sub">13+ years as a global strategic sourcing leader — helping regulated organizations mitigate risk, accelerate vendor onboarding, and drive multimillion-dollar commercial efficiency.</p>
+    <h1 class="hero-h1" data-i18n="hero_h1">Hi, I'm Carlos.<br>Strategic Sourcing<br><em>Executive.</em></h1>
+    <p class="hero-sub" data-i18n="hero_sub">15 years. 8 countries. $100M+ portfolios. Building procurement excellence for the world's most regulated organizations.</p>
     <div class="hero-actions">
       <a href="mailto:ing.dilone@gmail.com" class="btn btn-dark">
         <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/></svg>
@@ -369,9 +384,11 @@
         <h2 class="sh" data-i18n="about_h">Where strategy meets <em>partnership</em></h2>
       </div>
       <div class="reveal d1">
-        <p data-i18n="about_p1">Over 13 years, I've worked at the intersection of commercial discipline and human relationships — from manufacturing floors in Belgium and Sweden to the boardrooms of Canada's largest institutions.</p>
+        <p data-i18n="about_p1">Over 15 years, I've worked at the intersection of commercial discipline and human relationships — from manufacturing floors in Belgium and Sweden to the boardrooms of Canada's largest financial institutions.</p>
+
         <p data-i18n="about_p2">I currently lead strategic sourcing at <strong>TD Bank</strong>, overseeing a $100M+ CAD spend portfolio in one of Canada's most regulated environments. Previously at <strong>Indigo</strong>, I built a vendor platform for 3,000+ suppliers and delivered $2.6M in savings within eight months.</p>
-        <p data-i18n="about_p3">I speak at procurement summits, mentor professionals entering the Canadian market, and believe that lasting commercial outcomes are built on trust as much as terms.</p>
+
+        <p data-i18n="about_p3">I speak at global procurement summits, mentor professionals through <strong>Hispanotech Canada</strong> and the <strong>TD Capabilities Mentorship Program</strong>, and believe that lasting commercial outcomes are built on trust as much as terms.</p>
       </div>
     </div>
   </div>
@@ -421,7 +438,7 @@
       <div class="num-item reveal"><div class="num-val">$100M+</div><div class="num-lbl" data-i18n="n1">Annual spend managed</div></div>
       <div class="num-item reveal d1"><div class="num-val">$2.6M</div><div class="num-lbl" data-i18n="n2">Savings in 8 months</div></div>
       <div class="num-item reveal d2"><div class="num-val">3,000+</div><div class="num-lbl" data-i18n="n3">Vendors onboarded</div></div>
-      <div class="num-item reveal d3"><div class="num-val">13 yrs</div><div class="num-lbl" data-i18n="n4">Global experience</div></div>
+      <div class="num-item reveal d3"><div class="num-val">15 yrs</div><div class="num-lbl" data-i18n="n4">Global experience</div></div>
     </div>
   </div>
 </section>
@@ -437,7 +454,10 @@
       <div class="work-item reveal">
         <div>
           <div class="work-period">2025 — Present</div>
-          <div class="work-co">TD Bank</div>
+          <div class="work-logo-wrap">
+            <img src="https://logo.clearbit.com/td.com" alt="TD Bank" class="work-logo" onerror="this.style.display='none'">
+            <div class="work-co">TD Bank</div>
+          </div>
           <div class="work-city">Toronto, ON</div>
         </div>
         <div>
@@ -449,7 +469,10 @@
       <div class="work-item reveal">
         <div>
           <div class="work-period">2021 — 2025</div>
-          <div class="work-co">Indigo Books &amp; Music</div>
+          <div class="work-logo-wrap">
+            <img src="https://logo.clearbit.com/chapters.indigo.ca" alt="Indigo" class="work-logo" onerror="this.style.display='none'">
+            <div class="work-co">Indigo Books &amp; Music</div>
+          </div>
           <div class="work-city">Toronto, ON</div>
         </div>
         <div>
@@ -460,8 +483,12 @@
       </div>
       <div class="work-item reveal">
         <div>
-          <div class="work-period">2012 — 2014</div>
-          <div class="work-co">Husqvarna · ArcelorMittal</div>
+          <div class="work-period">2011 — 2014</div>
+          <div class="work-logo-wrap">
+            <img src="https://logo.clearbit.com/husqvarna.com" alt="Husqvarna" class="work-logo" onerror="this.style.display='none'">
+            <img src="https://logo.clearbit.com/arcelormittal.com" alt="ArcelorMittal" class="work-logo" onerror="this.style.display='none'">
+            <div class="work-co">Husqvarna · ArcelorMittal</div>
+          </div>
           <div class="work-city">Stockholm · Gent</div>
         </div>
         <div>
@@ -484,13 +511,20 @@
       <div class="human-right reveal d1">
         <div class="label" data-i18n="human_label">Beyond the resume</div>
         <h2 class="sh" data-i18n="human_h">Globally <em>minded</em></h2>
-        <p data-i18n="human_p1">I grew up in the Dominican Republic, studied across Europe on an Erasmus scholarship, and have built my career across five countries. That global perspective shapes how I approach every negotiation and relationship.</p>
-        <p data-i18n="human_p2">I mentor Latin professionals entering the Canadian market through <strong>Hispanotech Canada</strong>, and speak at procurement events because strategic sourcing — done well — deserves a bigger stage.</p>
+        <p data-i18n="human_p1">I grew up in the Dominican Republic, studied across Europe on an Erasmus scholarship, and have lived and worked across 8 countries. That global perspective shapes how I approach every negotiation and relationship.</p>
+        <p data-i18n="human_p2">I mentor Latin professionals through <strong>Hispanotech Canada</strong> and the <strong>TD Capabilities Mentorship Program</strong>, and speak at procurement events because strategic sourcing — done well — deserves a bigger stage.</p>
         <div class="tags-row">
-          <span class="tag"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zm0 2c.9 0 2 .8 2.9 2.7H9.1C10 6.8 11.1 4 12 4zm-3.8 4.7h7.6c.3.9.5 1.9.6 3H8.6c0-1.1.3-2.1.6-3zM2 12c0-.3 0-.7.1-1h3.5c0 .7.1 1.4.2 2H2.3c-.2-.6-.3-1.3-.3-1zm10 8c-.9 0-2-.8-2.9-2.7h5.8C13.9 19.2 12.9 20 12 20zm-3.6-4.7c-.3-.9-.5-1.9-.6-3h8.4c-.1 1.1-.3 2.1-.6 3H8.4zm9 2.4c.5-1 .8-2.1.9-3.4H21.9a8 8 0 0 1-4.5 3.4zm1-5.4c.1-.6.2-1.3.2-2H22c0 .3.1.7.1 1v.3l-.1.7h-2.7zM5.6 8.7A8 8 0 0 1 10 5.3c-.5 1-.9 2.1-1 3.4H5.6zm-.2 5.3H2.1A8 8 0 0 1 5.7 10h3.2c-.1.6-.2 1.3-.2 2v1.3z"/></svg><span data-i18n="tag1">5 countries</span></span>
+          <span class="tag"><svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2zm0 2c.9 0 2 .8 2.9 2.7H9.1C10 6.8 11.1 4 12 4zm-3.8 4.7h7.6c.3.9.5 1.9.6 3H8.6c0-1.1.3-2.1.6-3zM2 12c0-.3 0-.7.1-1h3.5c0 .7.1 1.4.2 2H2.3c-.2-.6-.3-1.3-.3-1zm10 8c-.9 0-2-.8-2.9-2.7h5.8C13.9 19.2 12.9 20 12 20zm-3.6-4.7c-.3-.9-.5-1.9-.6-3h8.4c-.1 1.1-.3 2.1-.6 3H8.4zm9 2.4c.5-1 .8-2.1.9-3.4H21.9a8 8 0 0 1-4.5 3.4zm1-5.4c.1-.6.2-1.3.2-2H22c0 .3.1.7.1 1v.3l-.1.7h-2.7zM5.6 8.7A8 8 0 0 1 10 5.3c-.5 1-.9 2.1-1 3.4H5.6zm-.2 5.3H2.1A8 8 0 0 1 5.7 10h3.2c-.1.6-.2 1.3-.2 2v1.3z"/></svg><span data-i18n="tag1">8 countries</span></span>
           <span class="tag"><svg viewBox="0 0 24 24"><path d="M12 1a4 4 0 0 0-4 4v6a4 4 0 0 0 8 0V5a4 4 0 0 0-4-4zm6 10a6 6 0 0 1-12 0H4a8 8 0 0 0 7 7.93V22h2v-3.07A8 8 0 0 0 20 11h-2z"/></svg><span data-i18n="tag2">SIG Speaker ×3</span></span>
           <span class="tag"><svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zm0 12.5L4.5 11l-.5.27V17c0 1.1 3.58 3 8 3s8-1.9 8-3v-5.73l-.5-.27L12 15.5z"/></svg><span data-i18n="tag3">Erasmus Mundus</span></span>
           <span class="tag"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg><span data-i18n="tag4">Mentor</span></span>
+        </div>
+        <div class="lang-badges">
+          <span class="lang-badge"><span class="flag">🇬🇧</span> English</span>
+          <span class="lang-badge"><span class="flag">🇫🇷</span> Français</span>
+          <span class="lang-badge"><span class="flag">🇪🇸</span> Español</span>
+          <span class="lang-badge"><span class="flag">🇧🇷</span> Português</span>
+          <span class="lang-badge"><span class="flag">🇮🇹</span> Italiano</span>
         </div>
       </div>
     </div>
@@ -504,31 +538,42 @@
     <h2 class="sh reveal d1" data-i18n="rec_h">Speaking &amp; <em>giving back</em></h2>
     <div class="rec-grid">
       <div class="rec-card reveal">
-        <div class="rec-icon"><svg viewBox="0 0 24 24"><path d="M12 1a4 4 0 0 0-4 4v6a4 4 0 0 0 8 0V5a4 4 0 0 0-4-4zm6 10a6 6 0 0 1-12 0H4a8 8 0 0 0 7 7.93V22h2v-3.07A8 8 0 0 0 20 11h-2z"/></svg></div>
+        <img src="https://logo.clearbit.com/sig.org" alt="SIG" class="rec-logo" onerror="this.outerHTML='<div class=\'rec-icon\'><svg viewBox=\'0 0 24 24\'><path d=\'M12 1a4 4 0 0 0-4 4v6a4 4 0 0 0 8 0V5a4 4 0 0 0-4-4zm6 10a6 6 0 0 1-12 0H4a8 8 0 0 0 7 7.93V22h2v-3.07A8 8 0 0 0 20 11h-2z\'/></svg></div>'">
         <div>
           <div class="rec-title" data-i18n="r1_title">SIG Global Executive Summit · 2022–2024</div>
-          <div class="rec-desc" data-i18n="r1_desc">Speaker at the premier global sourcing and procurement leadership forum for three consecutive years.</div>
+          <div class="rec-desc" data-i18n="r1_desc">Speaker at the Sourcing Industry Group's premier global leadership forum for three consecutive years.</div>
         </div>
       </div>
       <div class="rec-card reveal d1">
-        <div class="rec-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+        <div style="display:flex;gap:4px;flex-shrink:0;">
+          <img src="https://logo.clearbit.com/polimi.it" alt="Politecnico di Milano" class="rec-logo" onerror="this.style.display='none'">
+          <img src="https://logo.clearbit.com/hw.ac.uk" alt="Heriot-Watt" class="rec-logo" onerror="this.style.display='none'">
+          <img src="https://logo.clearbit.com/uah.es" alt="UAH" class="rec-logo" onerror="this.style.display='none'">
+        </div>
         <div>
           <div class="rec-title" data-i18n="r2_title">Erasmus Mundus Ambassador</div>
           <div class="rec-desc" data-i18n="r2_desc">High Merit Scholar at Politecnico di Milano. Dual MSc from Heriot-Watt University and Universidad de Alcalá.</div>
         </div>
       </div>
       <div class="rec-card reveal d2">
-        <div class="rec-icon"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg></div>
+        <img src="https://logo.clearbit.com/hispanotech.ca" alt="Hispanotech Canada" class="rec-logo" onerror="this.outerHTML='<div class=\'rec-icon\'><svg viewBox=\'0 0 24 24\'><path d=\'M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z\'/></svg></div>'">
         <div>
           <div class="rec-title" data-i18n="r3_title">Mentor · Hispanotech Canada</div>
           <div class="rec-desc" data-i18n="r3_desc">Guiding Latin professionals as they build meaningful careers in the Canadian business landscape.</div>
         </div>
       </div>
       <div class="rec-card reveal d3">
-        <div class="rec-icon"><svg viewBox="0 0 24 24"><path d="M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 3-11 8 0 0-2-5 4-7 0 0-3 1-4 6 0 0 5-4 9-1 0 0-3-6-11-1z"/></svg></div>
+        <img src="https://logo.clearbit.com/td.com" alt="TD Bank" class="rec-logo" onerror="this.outerHTML='<div class=\'rec-icon\'><svg viewBox=\'0 0 24 24\'><path d=\'M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z\'/></svg></div>'">
         <div>
-          <div class="rec-title" data-i18n="r4_title">EduAction Gerdau · AIESEC Brazil</div>
-          <div class="rec-desc" data-i18n="r4_desc">Leadership facilitator committed to developing the next generation of globally minded professionals.</div>
+          <div class="rec-title" data-i18n="r4_title">Mentor · TD Capabilities Program</div>
+          <div class="rec-desc" data-i18n="r4_desc">Supporting talent development within TD Bank's internal mentorship program for emerging leaders.</div>
+        </div>
+      </div>
+      <div class="rec-card reveal" style="grid-column:1/-1">
+        <img src="https://logo.clearbit.com/aiesec.org" alt="AIESEC" class="rec-logo" onerror="this.outerHTML='<div class=\'rec-icon\'><svg viewBox=\'0 0 24 24\'><path d=\'M17 8C8 10 5.9 16.17 3.82 21.34L5.71 22l1-2.3A4.49 4.49 0 0 0 8 20C19 20 22 3 22 3c-1 2-8 3-11 8 0 0-2-5 4-7 0 0-3 1-4 6 0 0 5-4 9-1 0 0-3-6-11-1z\'/></svg></div>'">
+        <div>
+          <div class="rec-title" data-i18n="r5_title">EduAction Gerdau · AIESEC Brazil</div>
+          <div class="rec-desc" data-i18n="r5_desc">Leadership facilitator for AIESEC — developing the next generation of globally minded professionals through the EduAction Gerdau programme.</div>
         </div>
       </div>
     </div>
@@ -603,17 +648,17 @@ const translations = {
   en: {
     nav_about:'About', nav_work:'Work', nav_recognition:'Recognition', nav_connect:'Connect',
     nav_cta:'Let\'s Connect →', hero_status:'Toronto · Open to opportunities',
-    hero_h1:'Hi, I\'m Carlos.<br>I optimize enterprise spend<br><em>and engineer high-value supplier partnerships.</em>',
-    hero_sub:'13+ years as a global strategic sourcing leader — helping regulated organizations mitigate risk, accelerate vendor onboarding, and drive multimillion-dollar commercial efficiency.',
+    hero_h1:'Hi, I\'m Carlos.<br>Strategic Sourcing<br><em>Executive.</em>',
+    hero_sub:'15 years. 8 countries. $100M+ portfolios. Building procurement excellence for the world\'s most regulated organizations.',
     btn_hello:'Discuss a Project', btn_speak:'Invite me to speak',
     about_label:'About', about_h:'Where strategy meets <em>partnership</em>',
-    about_p1:'Over 13 years, I\'ve worked at the intersection of commercial discipline and human relationships — from manufacturing floors in Belgium and Sweden to the boardrooms of Canada\'s largest institutions.',
+    about_p1:'Over 15 years, I\'ve worked at the intersection of commercial discipline and human relationships — from manufacturing floors in Belgium and Sweden to the boardrooms of Canada\'s largest financial institutions.',
     about_p2:'I currently lead strategic sourcing at <strong>TD Bank</strong>, overseeing a $100M+ CAD spend portfolio in one of Canada\'s most regulated environments. Previously at <strong>Indigo</strong>, I built a vendor platform for 3,000+ suppliers and delivered $2.6M in savings within eight months.',
-    about_p3:'I speak at procurement summits, mentor professionals entering the Canadian market, and believe that lasting commercial outcomes are built on trust as much as terms.',
+    about_p3:'I speak at global procurement summits, mentor professionals through <strong>Hispanotech Canada</strong> and the <strong>TD Capabilities Mentorship Program</strong>, and believe that lasting commercial outcomes are built on trust as much as terms.',
     p1_name:'Regulated Risk Governance', p1_desc:'Third-party risk and compliance management in regulated financial environments.',
     p2_name:'Strategic Vendor Alliances', p2_desc:'Relationships that endure beyond the contract — built on accountability and shared value.',
     p3_name:'Data-Driven Capital Optimization', p3_desc:'Data-driven decisions that surface savings and opportunities others overlook.',
-    n1:'Annual spend managed', n2:'Savings in 8 months', n3:'Vendors onboarded', n4:'Global experience',
+    n1:'Annual spend managed', n2:'Savings in 8 months', n3:'Vendors onboarded', n4:'Years of experience',
     work_label:'Experience', work_h:'Career <em>highlights</em>',
     w1_note:'Leading sourcing for professional services across a $100M+ CAD portfolio. Partnering with legal, risk, and business stakeholders to drive cost discipline, governance, and supplier accountability.',
     w1_pill:'● Current', w2_role:'Sourcing Manager → Vendor Relations Lead',
@@ -621,14 +666,15 @@ const translations = {
     w3_role:'Global Sourcing &amp; Program Analyst',
     w3_note:'Early career grounding in global sourcing across European manufacturing — €220K in savings at Husqvarna, and EMEA/APAC programme support at ArcelorMittal.',
     human_label:'Beyond the resume', human_h:'Globally <em>minded</em>',
-    human_p1:'I grew up in the Dominican Republic, studied across Europe on an Erasmus scholarship, and have built my career across five countries. That global perspective shapes how I approach every negotiation and relationship.',
-    human_p2:'I mentor Latin professionals entering the Canadian market through <strong>Hispanotech Canada</strong>, and speak at procurement events because strategic sourcing — done well — deserves a bigger stage.',
-    tag1:'5 countries', tag2:'SIG Speaker ×3', tag3:'Erasmus Mundus', tag4:'Mentor',
+    human_p1:'I grew up in the Dominican Republic, studied across Europe on an Erasmus scholarship, and have lived and worked across 8 countries. That global perspective shapes how I approach every negotiation and relationship.',
+    human_p2:'I mentor Latin professionals through <strong>Hispanotech Canada</strong> and the <strong>TD Capabilities Mentorship Program</strong>, and speak at procurement events because strategic sourcing — done well — deserves a bigger stage.',
+    tag1:'8 countries', tag2:'SIG Speaker ×3', tag3:'Erasmus Mundus', tag4:'Mentor',
     rec_label:'Recognition &amp; Leadership', rec_h:'Speaking &amp; <em>giving back</em>',
-    r1_title:'SIG Global Executive Summit · 2022–2024', r1_desc:'Speaker at the premier global sourcing and procurement leadership forum for three consecutive years.',
+    r1_title:'SIG Global Executive Summit · 2022–2024', r1_desc:'Speaker at the Sourcing Industry Group\'s premier global leadership forum for three consecutive years.',
     r2_title:'Erasmus Mundus Ambassador', r2_desc:'High Merit Scholar at Politecnico di Milano. Dual MSc from Heriot-Watt University and Universidad de Alcalá.',
     r3_title:'Mentor · Hispanotech Canada', r3_desc:'Guiding Latin professionals as they build meaningful careers in the Canadian business landscape.',
-    r4_title:'EduAction Gerdau · AIESEC Brazil', r4_desc:'Leadership facilitator committed to developing the next generation of globally minded professionals.',
+    r4_title:'Mentor · TD Capabilities Program', r4_desc:'Supporting talent development within TD Bank\'s internal mentorship program for emerging leaders.',
+    r5_title:'EduAction Gerdau · AIESEC Brazil', r5_desc:'Leadership facilitator for AIESEC — developing the next generation of globally minded professionals through the EduAction Gerdau programme.',
     cta_label:'Get in touch', cta_h:'Let\'s build something<br><em>meaningful together</em>',
     cta_p:'Looking to hire a sourcing leader, book a speaker, or simply connect? I\'d love to hear from you.',
     resume_btn:'Resume'
@@ -636,13 +682,13 @@ const translations = {
   fr: {
     nav_about:'À propos', nav_work:'Expérience', nav_recognition:'Distinctions', nav_connect:'Contact',
     nav_cta:'Me contacter →', hero_status:'Toronto · Ouvert aux opportunités',
-    hero_h1:'Bonjour, je suis Carlos.<br>J\'optimise les dépenses d\'entreprise<br><em>et bâtis des alliances stratégiques avec les fournisseurs.</em>',
-    hero_sub:'13+ ans en tant que responsable mondial des achats — aidant les organisations réglementées à atténuer les risques, accélérer l\'intégration des fournisseurs et générer des efficiences commerciales multimillionnaires.',
+    hero_h1:'Bonjour, je suis Carlos.<br>Directeur Achats<br><em>Stratégiques.</em>',
+    hero_sub:'15 ans. 8 pays. Portefeuilles de 100 M$+. Bâtir l\'excellence en procurement pour les organisations mondiales les plus régulées.',
     btn_hello:'Discuter d\'un projet', btn_speak:'M\'inviter à intervenir',
     about_label:'À propos', about_h:'Là où la stratégie rencontre <em>le partenariat</em>',
-    about_p1:'En 13 ans, j\'ai évolué à l\'intersection de la rigueur commerciale et des relations humaines — des ateliers en Belgique et Suède aux salles de direction des plus grandes institutions canadiennes.',
-    about_p2:'Je dirige actuellement l\'approvisionnement stratégique chez <strong>TD Bank</strong>, avec un portefeuille de dépenses de plus de 100 M$ CAD. Chez <strong>Indigo</strong>, j\'ai créé une plateforme fournisseurs pour 3 000+ partenaires et réalisé 2,6 M$ d\'économies en huit mois.',
-    about_p3:'J\'interviens lors de sommets sur les achats, je conseille des professionnels qui s\'intègrent au marché canadien, et je crois que les meilleurs résultats commerciaux reposent autant sur la confiance que sur les conditions contractuelles.',
+    about_p1:'En 15 ans, j\'ai évolué à l\'intersection de la rigueur commerciale et des relations humaines — des ateliers en Belgique et Suède aux salles de direction des plus grandes institutions financières canadiennes.',
+    about_p2:'Je dirige actuellement l\'approvisionnement stratégique chez <strong>TD Bank</strong>, avec un portefeuille de plus de 100 M$ CAD. Chez <strong>Indigo</strong>, j\'ai créé une plateforme pour 3 000+ fournisseurs et réalisé 2,6 M$ d\'économies en huit mois.',
+    about_p3:'J\'interviens lors de sommets mondiaux sur les achats, je mentor des professionnels via <strong>Hispanotech Canada</strong> et le <strong>Programme de mentorship TD Capabilities</strong>, et je crois que les meilleurs résultats commerciaux reposent autant sur la confiance que sur les clauses contractuelles.',
     p1_name:'Gouvernance des risques réglementés', p1_desc:'Gestion des risques tiers et conformité dans des environnements financiers réglementés.',
     p2_name:'Alliances stratégiques fournisseurs', p2_desc:'Des relations qui perdurent au-delà du contrat — fondées sur la responsabilité et la valeur partagée.',
     p3_name:'Optimisation du capital par la donnée', p3_desc:'Des décisions fondées sur les données qui révèlent les économies et opportunités ignorées.',
@@ -654,14 +700,15 @@ const translations = {
     w3_role:'Analyste Achats &amp; Programmes Mondiaux',
     w3_note:'Fondements en approvisionnement mondial dans l\'industrie européenne — 220 K€ d\'économies chez Husqvarna, et soutien aux programmes EMEA/APAC chez ArcelorMittal.',
     human_label:'Au-delà du CV', human_h:'Une vision <em>mondiale</em>',
-    human_p1:'J\'ai grandi en République dominicaine, étudié à travers l\'Europe grâce à une bourse Erasmus, et construit ma carrière dans cinq pays. Cette perspective globale guide chaque négociation et relation.',
-    human_p2:'Je suis mentor pour les professionnels latino-américains au Canada via <strong>Hispanotech Canada</strong>, et j\'interviens lors d\'événements sur les achats car ce domaine mérite une plus grande visibilité.',
-    tag1:'5 pays', tag2:'Orateur SIG ×3', tag3:'Erasmus Mundus', tag4:'Mentor',
+    human_p1:'J\'ai grandi en République dominicaine, étudié en Europe grâce à une bourse Erasmus, et vécu et travaillé dans 8 pays. Cette perspective mondiale guide chaque négociation et relation.',
+    human_p2:'Je mentor des professionnels latinos via <strong>Hispanotech Canada</strong> et le <strong>Programme TD Capabilities</strong>, et j\'interviens en procurement car ce domaine mérite une plus grande visibilité.',
+    tag1:'8 pays', tag2:'Orateur SIG ×3', tag3:'Erasmus Mundus', tag4:'Mentor',
     rec_label:'Distinctions &amp; Leadership', rec_h:'Interventions &amp; <em>engagement</em>',
-    r1_title:'SIG Global Executive Summit · 2022–2024', r1_desc:'Intervenant au premier forum mondial de leadership en approvisionnement, trois années consécutives.',
+    r1_title:'SIG Global Executive Summit · 2022–2024', r1_desc:'Intervenant au forum mondial du Sourcing Industry Group pendant trois années consécutives.',
     r2_title:'Ambassadeur Erasmus Mundus', r2_desc:'Boursier Haute Distinction au Politecnico di Milano. Double Master de Heriot-Watt et de l\'Universidad de Alcalá.',
     r3_title:'Mentor · Hispanotech Canada', r3_desc:'Accompagnement des professionnels latino-américains dans leur parcours au Canada.',
-    r4_title:'EduAction Gerdau · AIESEC Brésil', r4_desc:'Facilitateur en développement du leadership pour la prochaine génération de professionnels.',
+    r4_title:'Mentor · Programme TD Capabilities', r4_desc:'Soutien au développement des talents dans le programme interne de mentorship de TD Bank.',
+    r5_title:'EduAction Gerdau · AIESEC Brésil', r5_desc:'Facilitateur en développement du leadership pour la prochaine génération de professionnels mondiaux.',
     cta_label:'Prendre contact', cta_h:'Construisons quelque chose<br><em>d\'important ensemble</em>',
     cta_p:'Vous cherchez un responsable achats, un conférencier ou simplement à échanger ? Je serais ravi d\'en discuter.',
     resume_btn:'CV'
@@ -669,13 +716,13 @@ const translations = {
   pt: {
     nav_about:'Sobre', nav_work:'Experiência', nav_recognition:'Reconhecimento', nav_connect:'Contato',
     nav_cta:'Entre em contato →', hero_status:'Toronto · Aberto a oportunidades',
-    hero_h1:'Olá, sou Carlos.<br>Otimizo os gastos corporativos<br><em>e desenvolvo alianças estratégicas com fornecedores.</em>',
-    hero_sub:'Mais de 13 anos como líder global de sourcing estratégico — ajudando organizações reguladas a mitigar riscos, agilizar a homologação de fornecedores e gerar eficiências comerciais multimilionárias.',
+    hero_h1:'Olá, sou Carlos.<br>Executivo de Sourcing<br><em>Estratégico.</em>',
+    hero_sub:'15 anos. 8 países. Portfólios acima de $100M. Construindo excelência em procurement para as organizações mais reguladas do mundo.',
     btn_hello:'Vamos Conversar', btn_speak:'Me convide para palestrar',
     about_label:'Sobre', about_h:'Onde estratégia encontra <em>parceria</em>',
-    about_p1:'Ao longo de 13 anos, atuei na interseção entre rigor comercial e relações humanas — de fábricas na Bélgica e na Suécia às salas de reunião das maiores instituições canadenses.',
+    about_p1:'Ao longo de 15 anos, atuei na interseção entre rigor comercial e relações humanas — de fábricas na Bélgica e na Suécia às salas de reunião das maiores instituições financeiras canadenses.',
     about_p2:'Atualmente lidero o sourcing estratégico no <strong>TD Bank</strong>, gerenciando um portfólio acima de $100M CAD em um dos ambientes mais regulados do Canadá. Na <strong>Indigo</strong>, desenvolvi uma plataforma para mais de 3.000 fornecedores e entreguei $2,6M em economias em oito meses.',
-    about_p3:'Palestro em cúpulas de procurement, mentoro profissionais que ingressam no mercado canadense e acredito que os melhores resultados comerciais se constroem com confiança tanto quanto com cláusulas contratuais.',
+    about_p3:'Palestro em cúpulas globais de procurement, mentoro profissionais pela <strong>Hispanotech Canada</strong> e pelo <strong>Programa TD Capabilities Mentorship</strong>, e acredito que os melhores resultados comerciais se constroem com confiança tanto quanto com cláusulas contratuais.',
     p1_name:'Governança de Risco Regulatório', p1_desc:'Gestão de risco de terceiros e conformidade em ambientes financeiros regulamentados.',
     p2_name:'Alianças Estratégicas com Fornecedores', p2_desc:'Relacionamentos que perduram além do contrato — construídos sobre responsabilidade e valor compartilhado.',
     p3_name:'Otimização de Capital Orientada por Dados', p3_desc:'Decisões baseadas em dados que revelam economias e oportunidades que outros deixam passar.',
@@ -687,28 +734,29 @@ const translations = {
     w3_role:'Analista de Sourcing &amp; Programas Globais',
     w3_note:'Base sólida em sourcing global na indústria europeia — €220K em economias na Husqvarna e suporte a programas EMEA/APAC na ArcelorMittal.',
     human_label:'Além do currículo', human_h:'Visão <em>global</em>',
-    human_p1:'Cresci na República Dominicana, estudei pela Europa com uma bolsa Erasmus e construí minha carreira em cinco países. Essa perspectiva global molda cada negociação e cada relacionamento.',
-    human_p2:'Mentoro profissionais latinos que ingressam no mercado canadense pela <strong>Hispanotech Canada</strong> e palestro em eventos de procurement porque essa área merece mais protagonismo.',
-    tag1:'5 países', tag2:'Palestrante SIG ×3', tag3:'Erasmus Mundus', tag4:'Mentor',
+    human_p1:'Cresci na República Dominicana, estudei pela Europa com uma bolsa Erasmus e vivi e trabalhei em 8 países. Essa perspectiva global molda cada negociação e relacionamento.',
+    human_p2:'Mentoro profissionais latinos pela <strong>Hispanotech Canada</strong> e pelo <strong>Programa TD Capabilities Mentorship</strong>, e palestro em eventos de procurement porque essa área merece mais protagonismo.',
+    tag1:'8 países', tag2:'Palestrante SIG ×3', tag3:'Erasmus Mundus', tag4:'Mentor',
     rec_label:'Reconhecimento &amp; Liderança', rec_h:'Palestras &amp; <em>contribuição</em>',
-    r1_title:'SIG Global Executive Summit · 2022–2024', r1_desc:'Palestrante no principal fórum de liderança em sourcing e procurement por três anos consecutivos.',
+    r1_title:'SIG Global Executive Summit · 2022–2024', r1_desc:'Palestrante no fórum mundial do Sourcing Industry Group por três anos consecutivos.',
     r2_title:'Embaixador Erasmus Mundus', r2_desc:'Alto Mérito no Politecnico di Milano. Duplo MSc pela Heriot-Watt University e Universidad de Alcalá.',
     r3_title:'Mentor · Hispanotech Canada', r3_desc:'Mentorando profissionais latinos na construção de carreiras sólidas no Canadá.',
-    r4_title:'EduAction Gerdau · AIESEC Brasil', r4_desc:'Facilitador de desenvolvimento de liderança para a próxima geração de profissionais globais.',
+    r4_title:'Mentor · Programa TD Capabilities', r4_desc:'Apoiando o desenvolvimento de talentos no programa interno de mentoria do TD Bank.',
+    r5_title:'EduAction Gerdau · AIESEC Brasil', r5_desc:'Facilitador de liderança para a próxima geração de profissionais globais pelo programa EduAction Gerdau.',
     cta_label:'Entre em contato', cta_h:'Vamos construir algo<br><em>significativo juntos</em>',
     cta_p:'Quer contratar um líder de sourcing, convidar um palestrante ou simplesmente bater um papo? Adoraria te ouvir.',
     resume_btn:'Currículo'
   },
   es: {
     nav_about:'Sobre mí', nav_work:'Experiencia', nav_recognition:'Reconocimientos', nav_connect:'Contacto',
-    nav_cta:'Hola →', hero_status:'Toronto · Abierto a oportunidades',
-    hero_h1:'Hola, soy Carlos.<br>Optimizo el gasto empresarial<br><em>y construyo alianzas estratégicas con proveedores.</em>',
-    hero_sub:'Más de 13 años como líder global de sourcing estratégico — ayudando a organizaciones reguladas a mitigar riesgos, acelerar la integración de proveedores y generar eficiencias comerciales multimillonarias.',
+    nav_cta:'Hablemos →', hero_status:'Toronto · Abierto a oportunidades',
+    hero_h1:'Hola, soy Carlos.<br>Ejecutivo de Sourcing<br><em>Estratégico.</em>',
+    hero_sub:'15 años. 8 países. Portafolios de $100M+. Construyendo excelencia en procurement para las organizaciones más reguladas del mundo.',
     btn_hello:'Discutir un Proyecto', btn_speak:'Invítame a hablar',
     about_label:'Sobre mí', about_h:'Donde la estrategia encuentra <em>la alianza</em>',
-    about_p1:'Durante 13 años he trabajado en la intersección entre el rigor comercial y las relaciones humanas — desde plantas de fabricación en Bélgica y Suecia hasta las salas de juntas de las principales instituciones de Canadá.',
+    about_p1:'Durante 15 años he trabajado en la intersección entre el rigor comercial y las relaciones humanas — desde plantas de fabricación en Bélgica y Suecia hasta las salas de juntas de las principales instituciones financieras de Canadá.',
     about_p2:'Actualmente lidero el sourcing estratégico en <strong>TD Bank</strong>, gestionando un portafolio de más de $100M CAD en uno de los entornos más regulados de Canadá. En <strong>Indigo</strong>, construí una plataforma para 3.000+ proveedores y logré $2,6M en ahorros en ocho meses.',
-    about_p3:'Participo como ponente en cumbres de procurement, asesoro a profesionales que ingresan al mercado canadiense y creo que los mejores resultados comerciales se construyen sobre la confianza tanto como sobre los términos.',
+    about_p3:'Participo como ponente en cumbres globales de procurement, asesoro a profesionales a través de <strong>Hispanotech Canada</strong> y el <strong>Programa TD Capabilities Mentorship</strong>, y creo que los mejores resultados comerciales se construyen sobre la confianza tanto como sobre los términos.',
     p1_name:'Gobernanza de Riesgo Regulado', p1_desc:'Gestión de riesgo de terceros y cumplimiento normativo en entornos financieros regulados.',
     p2_name:'Alianzas Estratégicas con Proveedores', p2_desc:'Relaciones que perduran más allá del contrato — basadas en responsabilidad y valor compartido.',
     p3_name:'Optimización de Capital Basada en Datos', p3_desc:'Decisiones basadas en datos que revelan ahorros y oportunidades que otros no ven.',
@@ -720,14 +768,15 @@ const translations = {
     w3_role:'Analista de Sourcing &amp; Programas Globales',
     w3_note:'Formación en sourcing global en la industria europea — €220K en ahorros en Husqvarna y soporte a programas EMEA/APAC en ArcelorMittal.',
     human_label:'Más allá del currículum', human_h:'Visión <em>global</em>',
-    human_p1:'Crecí en República Dominicana, estudié en Europa con una beca Erasmus y he construido mi carrera en cinco países. Esa perspectiva global moldea cada negociación y relación.',
-    human_p2:'Asesoro a profesionales latinos que ingresan al mercado canadiense a través de <strong>Hispanotech Canada</strong> y participo en eventos de procurement porque el sourcing estratégico merece mayor visibilidad.',
-    tag1:'5 países', tag2:'Ponente SIG ×3', tag3:'Erasmus Mundus', tag4:'Mentor',
+    human_p1:'Crecí en República Dominicana, estudié en Europa con una beca Erasmus y he vivido y trabajado en 8 países. Esa perspectiva global moldea cada negociación y relación.',
+    human_p2:'Asesoro a profesionales latinos a través de <strong>Hispanotech Canada</strong> y el <strong>Programa TD Capabilities Mentorship</strong>, y participo en eventos de procurement porque el sourcing estratégico merece mayor visibilidad.',
+    tag1:'8 países', tag2:'Ponente SIG ×3', tag3:'Erasmus Mundus', tag4:'Mentor',
     rec_label:'Reconocimientos &amp; Liderazgo', rec_h:'Ponencias &amp; <em>contribución</em>',
-    r1_title:'SIG Global Executive Summit · 2022–2024', r1_desc:'Ponente en el principal foro mundial de liderazgo en sourcing y procurement durante tres años consecutivos.',
+    r1_title:'SIG Global Executive Summit · 2022–2024', r1_desc:'Ponente en el foro mundial del Sourcing Industry Group durante tres años consecutivos.',
     r2_title:'Embajador Erasmus Mundus', r2_desc:'Beca de Alto Mérito en el Politecnico di Milano. Doble Máster por Heriot-Watt University y Universidad de Alcalá.',
     r3_title:'Mentor · Hispanotech Canada', r3_desc:'Orientando a profesionales latinos en la construcción de carreras significativas en Canadá.',
-    r4_title:'EduAction Gerdau · AIESEC Brasil', r4_desc:'Facilitador de desarrollo de liderazgo para la próxima generación de profesionales globales.',
+    r4_title:'Mentor · Programa TD Capabilities', r4_desc:'Apoyando el desarrollo del talento en el programa interno de mentorship de TD Bank.',
+    r5_title:'EduAction Gerdau · AIESEC Brasil', r5_desc:'Facilitador de liderazgo para la próxima generación de profesionales globales a través del programa EduAction Gerdau.',
     cta_label:'Ponte en contacto', cta_h:'Construyamos algo<br><em>significativo juntos</em>',
     cta_p:'¿Buscas un líder de compras, un ponente o simplemente conectar? Estaré encantado de escucharte.',
     resume_btn:'Currículum'
