@@ -295,17 +295,83 @@
 
     /* ── RESPONSIVE ───────────────────────────────── */
     @media (max-width:820px) {
-      .hero-left { padding:7rem 5vw 4rem; }
-      .intro-grid,.human-grid { grid-template-columns:1fr; gap:2rem; }
-      .human-img { aspect-ratio:16/9; }
-      .pillars-grid { grid-template-columns:1fr; }
-      .numbers-grid { grid-template-columns:1fr 1fr; }
-      .work-item { grid-template-columns:1fr; gap:0.2rem; }
-      .rec-grid { grid-template-columns:1fr; }
+      /* Nav */
       .nav-links { display:none; }
+      nav { padding:0.75rem 4vw; }
+
+      /* Hero */
+      .hero-left { padding:6.5rem 5vw 4rem; max-width:100%; }
+      .hero-h1 { font-size:clamp(2rem,7vw,3rem); }
+      .hero-sub { font-size:0.9rem; max-width:100%; }
+
+      /* Video overlay — full opacity on mobile so text is always legible */
+      :root { --video-overlay: linear-gradient(to bottom, rgba(255,255,255,0.97) 0%, rgba(255,255,255,0.92) 60%, rgba(255,255,255,0.75) 100%); }
+      [data-theme="dark"] { --video-overlay: linear-gradient(to bottom, rgba(19,19,19,0.97) 0%, rgba(19,19,19,0.92) 60%, rgba(19,19,19,0.75) 100%); }
+
+      /* Layout stacks */
+      .intro-grid { grid-template-columns:1fr; gap:1.75rem; }
+      .human-grid { grid-template-columns:1fr; gap:2rem; }
+      .human-img { aspect-ratio:4/3; }
+      .pillars-grid { grid-template-columns:1fr; }
+      .numbers-grid { grid-template-columns:1fr 1fr; gap:1.25rem; }
+      .work-item { grid-template-columns:1fr; gap:0.3rem; }
+      .rec-grid { grid-template-columns:1fr; }
+
+      /* Section padding */
+      #intro,#work,#human,#recognition { padding:3.5rem 0; }
+      #numbers { padding:2.5rem 0; }
+      #cta { padding:4rem 0; }
+
+      /* Typography */
+      .sh { font-size:clamp(1.4rem,5vw,1.9rem); }
+      .num-val { font-size:1.7rem; }
+
+      /* Work logos */
+      .work-logo-wrap { flex-wrap:wrap; }
+
+      /* Rec card logo row on mobile */
+      .rec-card { flex-wrap:wrap; gap:0.75rem; }
     }
+
     @media (max-width:500px) {
+      /* Nav controls */
       .lang-btn span { display:none; }
+      .nav-cta { display:none; }
+
+      /* Hero */
+      .hero-left { padding:5.5rem 5vw 3rem; }
+      .hero-h1 { font-size:clamp(1.85rem,8vw,2.5rem); margin-bottom:0.9rem; }
+      .hero-sub { font-size:0.85rem; line-height:1.75; }
+      .hero-actions { gap:0.5rem; }
+      .btn { font-size:0.75rem; padding:0.6rem 1rem; }
+
+      /* Numbers — stack to 2 cols */
+      .numbers-grid { grid-template-columns:1fr 1fr; gap:1rem; }
+      .num-val { font-size:1.5rem; }
+      .num-lbl { font-size:0.62rem; }
+
+      /* Pillars */
+      .pillar { padding:1.25rem 1rem; }
+
+      /* About */
+      .intro-grid p { font-size:0.88rem; }
+
+      /* Human tags */
+      .tags-row, .lang-badges { gap:0.35rem; }
+      .tag, .lang-badge { font-size:0.67rem; padding:0.25rem 0.55rem; }
+
+      /* Rec cards */
+      .rec-card { padding:1.25rem; }
+      .rec-title { font-size:0.8rem; }
+      .rec-desc { font-size:0.72rem; }
+
+      /* CTA */
+      .cta-btns { flex-direction:column; align-items:center; }
+      .cta-btns .btn { width:100%; justify-content:center; max-width:280px; }
+
+      /* Footer */
+      footer { flex-direction:column; align-items:flex-start; gap:0.75rem; }
+      .foot-links { gap:1rem; }
     }
   </style>
 </head>
